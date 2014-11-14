@@ -1,0 +1,1 @@
+Stolen from here for educational purposes : http://uglyhack.appspot.com/videofx/

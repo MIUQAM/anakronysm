@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>
+			VideoFX
+		</title>
+		<meta charset="utf-8" />
+		
+		<script type="text/javascript">
+
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-24008188-1']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+
+		</script>
+		
+		<script type="x-shader/x-vertex" id="vertexshader">
+		
+			#ifdef GL_ES
+			precision highp float;
+			#endif
+
+			varying vec2 vUv;
+		
+			void main()
+			{
+				vUv = uv;
+				gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+			}
+		
+		</script>
+		
+		<script src="./resources/Three.js" type="text/javascript"></script>
+		<script type="text/javascript" src="./resources/DAT.GUI.min.js"></script>
+		<script src="./resources/RequestAnimationFrame.js" type="text/javascript"></script>
+		<script src="./resources/Detector.js" type="text/javascript"></script>
+		
+		<script src="glsl/simplexnoise.js" type="text/javascript" ></script>
+		<script src="glsl/fragmentshader.js" type="text/javascript" ></script>
+		
+		<script src="./resources/jquery.min.js" type="text/javascript"></script>
+		
+
+		<script src="videofx.js" type="text/javascript"></script>
+
+		<style> 
+			body {
+				background: black;
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+			}
+			.overlay {
+				position: fixed;
+				padding: 5px;
+				z-index: 1002;
+			}
+			.overlaybottom {
+				position: fixed;
+				padding: 5px;
+				z-index: 1002;
+				bottom: 0%;
+			}
+		</style>
+	
+	</head>
+	<body>
+		<video id="video" autoplay loop audio="muted" style="display:none">
+			<source src="./resources/video/video.webm" type='video/webm'>
+			<source src="./resources/video/video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+			<source src="./resources/video/video.ogv" type='video/ogg; codecs="theora, vorbis"'>
+		</video>
+		<div id="scene" onmousemove="mousemove(event);">
+			<div class="overlay">
+				<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://uglyhack.appspot.com/videofx/" data-count="horizontal" data-via="DanielPettersso">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+			</div>
+			<div class="overlaybottom">
+				<a href="http://www.chromeexperiments.com/detail/videofx/"><img src="./resources/badge-white_black.png" alt="See my Experiment on ChromeExperiments.com" /></a>
+			</div>
+			
+		</div>
+		
+		
+	</body>
+</html>
