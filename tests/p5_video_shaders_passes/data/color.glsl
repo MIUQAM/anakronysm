@@ -1,10 +1,7 @@
 #define PROCESSING_TEXTURE_SHADER
 
 uniform sampler2D texture;
-varying vec4 vertColor;
 varying vec4 vertTexCoord;
-uniform vec2 texOffset;
-uniform vec2 resolution;
 
 uniform vec3 colorFilter;
 
