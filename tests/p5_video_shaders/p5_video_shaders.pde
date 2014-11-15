@@ -1,28 +1,21 @@
 import processing.video.*;
 
-Capture video;
+Movie video;
 PGraphics pg;
 PShader shader;
+PShader sepialize;
 
 void setup() {
   size(800, 600, OPENGL);
 
-  // This the default video input, see the GettingStartedCapture 
-  // example if it creates an error
-  video = new Capture(this, 160, 120);
-
-  // Start capturing the images from the camera
-  video.start();  
+  video = new Movie(this, "Through_The_Mirror.mp4");
+  video.play();  
 
   pg = createGraphics(width, height, OPENGL);
   pg.beginDraw();
   pg.endDraw();
 
-  shader = loadShader("ripple2D.glsl");
-  shader.set("timeFactor", 10.0);
-  shader.set("rippleHeight", 0.005);
-  shader.set("rippleQuantity", 200.0);
-  shader.set("rippleMaxDistance", 0.75);
+  sepialize = loadShader("sepia.glsl");
 }
 
 
@@ -40,13 +33,12 @@ void draw() {
 void updatePG() {
   pg.beginDraw();
   pg.clear();
-  
-  shader.set("rippleOrigin", (float)mouseX/width, (float)mouseY/height);
-  shader.set("time", millis()/1000.0);
 
-  pg.shader(shader);
+  pg.shader(sepialize);
   pg.image(video, 0, 0, width, height);
   pg.resetShader();
+
+  pg.image(video, width/2, 0, width, height);
 
   pg.fill(255);
   pg.noStroke();
