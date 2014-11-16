@@ -8,11 +8,8 @@ PImage brush;
 
 PGraphics pass1;
 PGraphics pass2;
-FingerMask mask1;
-FingerMask mask2;
-FingerMask mask3;
-FingerMask mask4;
-FingerMask mask5;
+
+ArrayList<FingerMask> fingerMaskArray = new ArrayList<FingerMask>();
 
 PShader sepialize;
 PShader colorizeCircle;
@@ -34,11 +31,9 @@ void setup() {
   pass2.beginDraw();
   pass2.endDraw();
 
-  mask1 = new FingerMask();
-  mask2 = new FingerMask();
-  mask3 = new FingerMask();
-  mask4 = new FingerMask();
-  mask5 = new FingerMask();
+  for (int i = 0; i < 5; i++) {
+    fingerMaskArray.add(new FingerMask());
+  }
 
   sepialize = loadShader("sepia.glsl");
 
@@ -66,9 +61,6 @@ void draw() {
     int fps = Math.round(frameRate);
     frame.setTitle(fps + "fps");
   }
-  
-  //image(mask1.draw(), 0, 0);
-  //image(mask2.draw(), 0, 0);
 
 }
 
@@ -76,10 +68,11 @@ void updateLeap(){
 
   int fps = leap.getFrameRate();
 
-  for(Hand hand : leap.getHands()){
-    // ========= FINGERS =========
+  if(leap.getHands().size() > 0){
+    for(Hand hand : leap.getHands()){
+      // ========= FINGERS =========
 
-    for(Finger finger : hand.getFingers()){
+      for(Finger finger : hand.getFingers()){
 
 
         // ----- BASICS -----
@@ -93,28 +86,13 @@ void updateLeap(){
 
 
         // ----- SPECIFIC FINGER -----
+        fingerMaskArray.get(finger.getType()).update(finger_position);
+      }
+    }
+  } else {
 
-        switch(finger.getType()){
-            case 0:
-                mask1.update(finger_position);
-                // System.out.println("thumb");
-                break;
-            case 1:
-                mask2.update(finger_position);
-                break;
-            case 2:
-                mask3.update(finger_position);
-                // System.out.println("middle");
-                break;
-            case 3:
-                mask4.update(finger_position);
-                // System.out.println("ring");
-                break;
-            case 4:
-                mask5.update(finger_position);
-                // System.out.println("pinky");
-                break;
-        }
+    for (FingerMask fm : fingerMaskArray) {
+      fm.update(false);
     }
   }
 }
@@ -152,11 +130,9 @@ void updatePass2() {
   pass2.beginDraw();
   pass2.clear();
 
-  colorizeCircle.set("maskTexture_f1", mask1.draw());
-  colorizeCircle.set("maskTexture_f2", mask2.draw());
-  colorizeCircle.set("maskTexture_f3", mask3.draw());
-  colorizeCircle.set("maskTexture_f4", mask4.draw());
-  colorizeCircle.set("maskTexture_f5", mask5.draw());
+  for (int i = 0; i < 5; i++) {
+    colorizeCircle.set("maskTexture_f"+i, fingerMaskArray.get(i).draw());
+  }
 
   pass2.shader(colorizeCircle);
   pass2.image(video, 0, 0, width, height);
@@ -172,6 +148,7 @@ public class FingerMask {
   float posY;
   float size = 0.0;
   float sizeFactor = 2.0;
+  boolean show = false;
 
   public FingerMask() {
     circleMask = createGraphics(width, height, OPENGL);
@@ -183,16 +160,24 @@ public class FingerMask {
     posX = fingerPos.x;
     posY = fingerPos.y;
     size = fingerPos.z * sizeFactor;
+    this.show = true;
+  }
+
+  void update(boolean isVisible){
+    this.show = isVisible;
   }
 
   PGraphics draw(){
     circleMask.beginDraw();
     circleMask.fill(0, 10);
     circleMask.rect(0, 0, width, height);
-    circleMask.fill(255, 250);
-    circleMask.noStroke();
-    circleMask.imageMode(CENTER);
-    circleMask.image(brush, posX, posY, size, size);
+
+    if(this.show){
+      circleMask.fill(255, 25);
+      circleMask.noStroke();
+      circleMask.imageMode(CENTER);
+      circleMask.image(brush, posX, posY, size, size);
+    }
     circleMask.endDraw();
 
     return circleMask;
