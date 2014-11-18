@@ -19,5 +19,5 @@ void draw() {
 }
 
 void sendMessage(String header, String msg){
-    bridge.send(header, msg);
+    println("bridge.send(header, msg): "+ bridge.send(header, msg));
 }

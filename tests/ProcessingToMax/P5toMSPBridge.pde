@@ -9,14 +9,14 @@ class P5toMSPBridge {
         this.remote = new NetAddress(adress,port);
     }
 
-    public void send(String header, String msg){
+    public OscMessage send(String header, String msg){
         OscMessage oscMessage = new OscMessage("/" + header);
 
         oscMessage.add(msg);
 
         this.oscP5.send(oscMessage, this.remote); 
-
-        println("oscMessage: "+oscMessage);
+        
+        return oscMessage;
     }
 
 }
