@@ -7,3 +7,5 @@ _old/*
 **/build-tmp/*
 *.log
 .*/
+data/videos/*
+data/videos/!.keep
