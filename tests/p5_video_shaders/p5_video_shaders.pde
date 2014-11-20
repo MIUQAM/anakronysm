@@ -8,7 +8,7 @@ PShader sepialize;
 void setup() {
   size(800, 600, OPENGL);
 
-  video = new Movie(this, "Through_The_Mirror.mp4");
+  video = new Movie(this, "../../../data/videos/Through_The_Mirror.mp4");
   video.play();  
 
   pg = createGraphics(width, height, OPENGL);

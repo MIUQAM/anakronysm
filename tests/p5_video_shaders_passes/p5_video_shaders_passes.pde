@@ -20,7 +20,7 @@ void setup() {
   
   leap = new LeapMotion(this);
 
-  video = new Movie(this, "Through_The_Mirror.mp4");
+  video = new Movie(this, "../../../data/videos/Through_The_Mirror.mp4");
   video.play();  
 
   pass1 = createGraphics(width, height, OPENGL);
