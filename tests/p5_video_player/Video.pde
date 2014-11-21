@@ -32,12 +32,14 @@ class Video {
         this.pg.endDraw();
     }
 
-    public void backward(){
-        this.setSpeed(-1.0);
+    public float backward(){
+        this.setSpeed((-1.0) * abs(this.speed));
+        return this.getSpeed();
     }
 
-    public void forward(){
-        this.setSpeed(1.0);
+    public float forward(){
+        this.setSpeed(abs(this.speed));
+        return this.getSpeed();
     }
 
     public float setSpeed(float speed){

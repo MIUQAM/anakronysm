@@ -30,4 +30,12 @@ void keyPressed() {
         //Right
         println("video.changeSpeed(0.1): "+video.changeSpeed(0.1));
     }
+
+    else if(key == '1'){
+        //Right
+        println("video.backward(): "+video.backward());
+    }else if(key == '2'){
+        //Right
+        println("video.forward(): "+video.forward());
+    }
 }
