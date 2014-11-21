@@ -7,7 +7,7 @@ class Video {
 
     float speed = 1;
 
-    public Video (p5_video_player stage, String source) {
+    public Video (PApplet stage, String source) {
         this.video = new Movie(stage, source);
         this.pg = createGraphics(width, height, OPENGL);
         this.pg.beginDraw();
