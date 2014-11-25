@@ -7,14 +7,18 @@ class Video {
     float time;
     boolean playing;
     boolean available = false;
-
     float speed = 1;
+    int tickCount = 0;
+
+    TimeoutP5 timeout;
 
     public Video (PApplet stage, String source) {
         this.video = new Movie(stage, source);
         this.pg = createGraphics(width, height, OPENGL);
         this.pg.beginDraw();
         this.pg.endDraw();
+        this.timeout = new TimeoutP5(1000,true);
+        this.timeout.start();
     }
 
     public boolean play(){
@@ -56,6 +60,9 @@ class Video {
             // println("reading");
             video.read();
         }
+        if(this.timeout.isFinished()){
+            println("this.setMidSpeed(): "+this.setMidSpeed());
+        }
         this.pg.beginDraw();
             this.pg.clear();
             this.pg.image(video, 0, 0, width, height);
@@ -82,6 +89,21 @@ class Video {
         return this.speed;
     }
 
+    public float setMidSpeed(){
+        float speed = (float)this.tickCount/10;
+        if(speed == 0){
+            this.pause();
+        }
+        else{
+            if(!this.getPlaying()){
+                this.play();
+            }
+            this.setSpeed(speed);
+        }
+        this.tickCount = 0;
+        return this.getSpeed();
+    }
+
     public float changeSpeed(float speed){
         return this.setSpeed(this.getSpeed() + speed);
     }
@@ -100,7 +122,8 @@ class Video {
     }
 
     public float tick(){
-        this.setTime(this.getTime() + 1.0/frameRate);
+        // this.setTime(this.getTime() + 1.0/frameRate);
+        this.tickCount++;
         return this.getTime();
     }
 

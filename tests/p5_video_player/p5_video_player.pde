@@ -12,7 +12,7 @@ void setup() {
     size(960, 540, OPENGL);
     video = new Video(this, "../../../data/videos/Through_The_Mirror.ogv");
     video.play();
-    video.pause();
+    // video.pause();
     // video.setSpeed(0.00000000001);
 }
 
@@ -25,7 +25,7 @@ void draw() {
 }
 
 void keyPressed() {
-    println("keyCode: "+keyCode);
+    // println("keyCode: "+keyCode);
     if(keyCode == 37){
        //Left
        println("video.changeSpeed(-0.1): "+video.changeSpeed(-0.1));
