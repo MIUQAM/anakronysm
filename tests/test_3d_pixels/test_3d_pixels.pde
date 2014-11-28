@@ -8,19 +8,11 @@ Movie video;
 PImage brush;
 
 PGraphics pass1;
-PGraphics pass2;
 
 ArrayList<FingerMask> fingerMaskArray = new ArrayList<FingerMask>();
 
-PShader sepialize;
-PShader blackAndWhite;
-PShader swirl;
-PShader glow;
-PShader fisheye;
-PShader deform;
 PShader zPixels;
 PShader colorizeCircle;
-PShader dataMosh;
 float circleRadius = 100.0;
 
 void setup() {
@@ -36,23 +28,9 @@ void setup() {
   pass1.beginDraw();
   pass1.endDraw();
 
-  pass2 = createGraphics(width, height, OPENGL);
-  pass2.beginDraw();
-  pass2.endDraw();
-
   for (int i = 0; i < 5; i++) {
     fingerMaskArray.add(new FingerMask());
   }
-
-  sepialize = loadShader("sepia.glsl");
-  blackAndWhite = loadShader("bNw.glsl");
-  //swirl = loadShader("swirl.frag", "swirl.vert");
-  swirl = loadShader("swirl.glsl");
-  deform = loadShader("deform.glsl");
-  zPixels = loadShader("3dpixels.glsl");
-  fisheye = loadShader("fisheye.glsl");
-  dataMosh = loadShader("datamosh.glsl");
-  glow = loadShader("glow.glsl");
 
   colorizeCircle = loadShader("colorizeCircle.glsl");
 
@@ -68,11 +46,9 @@ void draw() {
   updateLeap();
 
   updatePass1();
-  updatePass2();
 
   background(0);
   image(pass1, 0, 0);
-  //image(pass2, 0, 0);
 
   if (frameCount % 30 == 1) {
     int fps = Math.round(frameRate);
@@ -133,43 +109,75 @@ void leapOnExit(){
 }
 
 void updatePass1() {
+
   pass1.beginDraw();
   pass1.clear();
+
+  //pass1.tint(255,10);
+  rotateY(frameCount/5);
+  pass1.image(video, 0, 0, width, height);
+
+
+  pass1.loadPixels();
+
+  for (int i = 0; i < pass1.height; i+=2) {
+    for (int j = 0; j < pass1.width; j+=2) {
+      noFill();
+      int index = getCurrentPixelIndex(j, i);
+
+      stroke(getRed(pass1.pixels[index]), getGreen(pass1.pixels[index]), getBlue(pass1.pixels[index]));
+
+      point(j, i, getBrightness(pass1.pixels[index]));
+    }
+    
+  }
 
   //deform.set("resolution", width, height);
   //pass1.shader(deform);
   //pass1.shader(sepialize);
   //pass1.shader(zPixels);
   //pass1.shader(blackAndWhite);
-
-  //pass1.shader(swirl);
-  
-  //fisheye.set("aperture", (float)fingerMaskArray.get(0).posX);
+  //fisheye.set("aperture", 180.0);
   //pass1.shader(fisheye);
-  swirl.set("angle", 100);
+  /*swirl.set("angle", 100);
   swirl.set("radius", 100);
   swirl.set("center", width/2, height/2);
-  pass1.shader(swirl);
-  //pass1.shader(dataMosh);
-
-  pass1.image(video, 0, 0, width, height);
-
-  pass1.resetShader();
+  pass1.shader(swirl);*/
+  //pass1.image(video, 0, 0, width, height);
+  //pass1.resetShader();
 
   pass1.endDraw();
 }
 
-void updatePass2() {
-  pass2.beginDraw();
-  pass2.clear();
+// Fonction qui retourne l'index du pixel à la position courante, dans le tableau des pixels
+int getCurrentPixelIndex(int _posX, int _posY) {
+  return int(constrain((_posY*width)+_posX, 0, pass1.width*pass1.height-1));
+}
 
-  for (int i = 0; i < 5; i++) {
-    colorizeCircle.set("maskTexture_f"+i, fingerMaskArray.get(i).draw());
-  }
+// Retourne la valeur de rouge d'une couleur passée en paramètre.
+float getRed(color c){
+  colorMode(RGB);
+  return ((c >> 16) & 0xFF);
+}
 
-  pass2.shader(colorizeCircle);
-  pass2.image(video, 0, 0, width, height);
-  pass2.resetShader();
+// Retourne la valeur de vert d'une couleur passée en paramètre.
+float getGreen(color c){
+  colorMode(RGB);
+  return ((c >> 8) & 0xFF);
+}
 
-  pass2.endDraw();
+// Retourne la valeur de bleu d'une couleur passée en paramètre.
+float getBlue(color c){
+  colorMode(RGB);
+  return (c & 0xFF);
+}
+
+// Retourne la valeur de luminosité d'une couleur passée en paramètre.
+float getBrightness(color c){
+  colorMode(HSB);
+  float brightnessValue = (c & 0xFF);
+  colorMode(RGB);
+
+  //float brightnessValue = getRed(c)*0.2126 + getGreen(c)*0.7152 + getBlue(c)*0.0722;
+  return brightnessValue;
 }

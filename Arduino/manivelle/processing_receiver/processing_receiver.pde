@@ -5,8 +5,7 @@ String portName = "/dev/tty.usbmodem1451";
 Serial serial;
 String messageFirstElement = "";
 int messageSecondElement = 0;
-float encodedValue = 0;
-float relativeValue = 0;
+float value = 0;
 
 void setup() {
     size(300, 300);
@@ -38,14 +37,9 @@ void serialEvent(Serial p) {
         messageFirstElement = elements[0];
         messageSecondElement = int(elements[1]);
         // On peut "router" les messages en comparant le premier Ã©lÃ©ment :
-        if ( messageFirstElement.equals("Encoded") ){
-            encodedValue = messageSecondElement;
-            println("encodedValue : " + encodedValue);
-        }
-
-        if ( messageFirstElement.equals("Relative") ){
-            relativeValue = messageSecondElement;
-            println("relativeValue : " + relativeValue);
+        if ( messageFirstElement.equals("direction") ){
+            value = messageSecondElement;
+            println("value : " + value);
         }
     }
 }
