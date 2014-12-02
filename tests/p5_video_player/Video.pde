@@ -90,7 +90,9 @@ class Video {
         }
         if(this.available){
             // println("reading");
+            video.volume(0);
             video.read();
+            video.volume(0);
         }
         if(this.timeout.isFinished()){
             println("this.setMidSpeed(): "+this.setMidSpeed());
@@ -190,6 +192,7 @@ class Video {
             this.video.stop();
         }
         this.video = new Movie(this.stage, this.getCurrentSource());
+        this.video.volume(0);
     }
 
 }
