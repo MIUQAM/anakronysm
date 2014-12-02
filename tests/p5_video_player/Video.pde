@@ -10,15 +10,43 @@ class Video {
     float speed = 1;
     int tickCount = 0;
 
+    PApplet stage;
+
     TimeoutP5 timeout;
 
+    String source;
+
+    boolean useList = false;
+    ArrayList<String> sources;
+    int currentSourceIndex = 0;
+
     public Video (PApplet stage, String source) {
-        this.video = new Movie(stage, source);
+        this.source = source;
+        this.stage = stage;
+        this.setup();
+    }
+
+    public Video (PApplet stage, ArrayList<String> sources){
+        this.sources = sources;
+        this.useList = true;
+        this.stage = stage;
+        this.setup();
+    }
+
+    private void setup(){
+        this.resetVideo();
         this.pg = createGraphics(width, height, OPENGL);
         this.pg.beginDraw();
         this.pg.endDraw();
         this.timeout = new TimeoutP5(1000,true);
         this.timeout.start();
+    }
+
+    private String getCurrentSource(){
+        if(useList)
+            return this.sources.get(currentSourceIndex);
+        else
+            return this.source;
     }
 
     public boolean play(){
@@ -50,6 +78,10 @@ class Video {
 
     public PGraphics getPg(){
         return this.pg;
+    }
+
+    public Movie getMovie(){
+        return this.video;
     }
 
     public void update(){
@@ -127,8 +159,37 @@ class Video {
         return this.getTime();
     }
 
-    void movieEvent(Movie m) {
-        // println("movieEvent dedans");
+    public int next(){
+        if(!useList)
+            return 0;
+        if(this.currentSourceIndex == sources.size() - 1){
+            this.currentSourceIndex = 0;
+        }else{
+            this.currentSourceIndex += 1;
+        }
+        this.resetVideo();
+        this.play();
+        return this.currentSourceIndex;
+    }
+
+    public int previous(){
+        if(!useList)
+            return 0;
+        if(this.currentSourceIndex == 0){
+            this.currentSourceIndex = sources.size() - 1;
+        }else{
+            this.currentSourceIndex -= 1;
+        }
+        this.resetVideo();
+        this.play();
+        return currentSourceIndex;
+    }
+
+    private void resetVideo(){
+        if(this.video != null){
+            this.video.stop();
+        }
+        this.video = new Movie(this.stage, this.getCurrentSource());
     }
 
 }

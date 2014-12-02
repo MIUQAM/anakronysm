@@ -7,10 +7,13 @@
 */
 
 Video video;
+ArrayList<String> videoList = new ArrayList<String>();
 
 void setup() {
     size(960, 540, OPENGL);
-    video = new Video(this, "../../../data/videos/Through_The_Mirror.ogv");
+    // video = new Video(this, "../../../data/videos/Through_The_Mirror.ogv");
+    videoList.add("../../../data/videos/Through_The_Mirror.ogv");
+    video = new Video(this, videoList);
     video.play();
     // video.pause();
     // video.setSpeed(0.00000000001);
@@ -21,7 +24,7 @@ void draw() {
     video.update();
     background(0);
     noStroke();
-    image(video.getPg(), 0, 0);
+    image(video.getMovie(), 0, 0);
 }
 
 void keyPressed() {
@@ -36,10 +39,10 @@ void keyPressed() {
 
     else if(key == '1'){
         //Right
-        println("video.backward(): "+video.backward());
+        println("video.next(): "+video.next());
     }else if(key == '2'){
         //Right
-        println("video.forward(): "+video.forward());
+        println("video.previous(): "+video.previous());
     }
 
     //Space
