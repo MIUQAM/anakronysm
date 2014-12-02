@@ -10,9 +10,15 @@ PImage brush;
 PGraphics pass1;
 PGraphics pass2;
 
+boolean pass2Visible = false;
+int pass2Alpha = 0;
+
 ArrayList<FingerMask> fingerMaskArray = new ArrayList<FingerMask>();
 
+PVector handPos = new PVector();
+
 PShader sepialize;
+PShader effect1;
 PShader blackAndWhite;
 PShader swirl;
 PShader glow;
@@ -45,6 +51,7 @@ void setup() {
   }
 
   sepialize = loadShader("sepia.glsl");
+  effect1 = loadShader("effect1.glsl");
   blackAndWhite = loadShader("bNw.glsl");
   //swirl = loadShader("swirl.frag", "swirl.vert");
   swirl = loadShader("swirl.glsl");
@@ -72,7 +79,7 @@ void draw() {
 
   background(0);
   image(pass1, 0, 0);
-  //image(pass2, 0, 0);
+  image(pass2, 0, 0);
 
   if (frameCount % 30 == 1) {
     int fps = Math.round(frameRate);
@@ -86,7 +93,13 @@ void updateLeap(){
   int fps = leap.getFrameRate();
 
   if(leap.getHands().size() > 0){
+
+    pass2Visible = true;
+
     for(Hand hand : leap.getHands()){
+
+      handPos = hand.getPosition();
+
       // ========= FINGERS =========
 
       for(Finger finger : hand.getFingers()){
@@ -111,6 +124,8 @@ void updateLeap(){
     for (FingerMask fm : fingerMaskArray) {
       fm.update(false);
     }
+
+    pass2Visible = false;
   }
 }
 
@@ -146,10 +161,11 @@ void updatePass1() {
   
   //fisheye.set("aperture", (float)fingerMaskArray.get(0).posX);
   //pass1.shader(fisheye);
-  swirl.set("angle", 100);
+  /*swirl.set("angle", 100);
   swirl.set("radius", 100);
-  swirl.set("center", width/2, height/2);
-  pass1.shader(swirl);
+  swirl.set("center", width/2, height/2);*/
+
+  pass1.shader(blackAndWhite);
   //pass1.shader(dataMosh);
 
   pass1.image(video, 0, 0, width, height);
@@ -160,14 +176,29 @@ void updatePass1() {
 }
 
 void updatePass2() {
+
+  if(pass2Visible && pass2Alpha < 255){
+    pass2Alpha+=2;
+  } else if(!pass2Visible && pass2Alpha > 0){
+    pass2Alpha-=2;
+  }
+  //effect1.set("enable", true);
+  effect1.set("a", norm(pass2Alpha, 0, 255));
+  effect1.set("x", norm(handPos.x, 0, 800));
+  effect1.set("y", norm(handPos.y, 0, 600));
+  effect1.set("z", norm(handPos.z, 0, 200));
+
+
   pass2.beginDraw();
   pass2.clear();
 
-  for (int i = 0; i < 5; i++) {
+  /*for (int i = 0; i < 5; i++) {
     colorizeCircle.set("maskTexture_f"+i, fingerMaskArray.get(i).draw());
   }
 
-  pass2.shader(colorizeCircle);
+  pass2.shader(colorizeCircle);*/
+  pass2.shader(effect1);
+
   pass2.image(video, 0, 0, width, height);
   pass2.resetShader();
 

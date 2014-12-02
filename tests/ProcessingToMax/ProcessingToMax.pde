@@ -15,9 +15,7 @@ void setup() {
 
 void draw() {
     background(0);
-    sendMessage("hey", "ho");
-}
-
-void sendMessage(String header, String msg){
-    println("bridge.send(header, msg): "+ bridge.send(header, msg));
+    //println(bridge.send("float", 10.1));
+    println(bridge.send("int", 50));
+    //println(bridge.send("string", "Hello motherfucker"));
 }
