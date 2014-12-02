@@ -15,6 +15,12 @@ int messageSecondElement = 0;
 float manivelleValue = 0;
 /* ============================== */
 
+
+Video video;
+ArrayList<String> videoList = new ArrayList<String>();
+
+
+
 void setup() {
   size(800, 600, OPENGL);
 
@@ -29,6 +35,10 @@ void setup() {
 
   leap = new LeapMotion(this);
 
+
+  videoList.add("videos/Through_The_Mirror.ogv");
+  video = new Video(this, videoList);
+  video.play();
 
 
   if(debug){
@@ -45,9 +55,43 @@ void draw() {
 
   updateLeap();
 
-  //println(bridge.send("speed", abs(value)));
-  //println(bridge.send("dir", abs(value)/value));
+  video.update();
+  background(0);
+  noStroke();
+  image(video.getMovie(), 0, 0);
 
+  println(bridge.send("speed", abs(video.speed)));
+  println(bridge.send("dir", abs(video.speed)/video.speed));
+
+}
+
+void keyPressed() {
+    // println("keyCode: "+keyCode);
+    if(keyCode == 37){
+       //Left
+       println("video.changeSpeed(-0.1): "+video.changeSpeed(-0.1));
+    }else if(keyCode == 39){
+        //Right
+        println("video.changeSpeed(0.1): "+video.changeSpeed(0.1));
+    }
+
+    else if(key == '1'){
+        //Right
+        println("video.next(): "+video.next());
+    }else if(key == '2'){
+        //Right
+        println("video.previous(): "+video.previous());
+    }
+
+    //Space
+    else if(keyCode == 32){
+        video.tick();
+    }
+
+    //Command
+    else if(keyCode == 157){
+        println("video.togglePlay(): "+video.togglePlay());
+    }
 }
 
 
