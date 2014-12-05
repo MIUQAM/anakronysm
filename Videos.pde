@@ -131,10 +131,8 @@ class Videos {
     }
 
     public float setMidSpeed(){
-        float speed = (float)this.tickCount/1000;
-        if(this.direction == -1){
-            this.speed = -this.speed;
-        }
+        float speed = (float)this.tickCount/100;
+
         if(speed == 0){
             this.pause();
         }
@@ -142,7 +140,7 @@ class Videos {
             if(!this.getPlaying()){
                 this.play();
             }
-            this.setSpeed(speed);
+            this.setSpeed(direction * speed);
         }
         this.tickCount = 0;
         return this.getSpeed();

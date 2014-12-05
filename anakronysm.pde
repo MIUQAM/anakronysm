@@ -46,7 +46,7 @@ void setup() {
   leap = new LeapMotion(this);
 
 
-  videos.add("videos/Through_The_Mirror.ogv");
+  //videos.add("videos/Through_The_Mirror.ogv");
   videos.add("videos/1920/1_Steamboat_1928.ogv");
   videos.add("videos/1920/2_Steamboat_1928.ogv");
   videos.add("videos/1920/3_skeleton dance_1929.ogv");
