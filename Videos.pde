@@ -102,7 +102,8 @@ class Videos {
             }
         }
         if(this.timeout.isFinished()){
-            println("this.setMidSpeed(): "+this.setMidSpeed());
+            this.setMidSpeed();
+            //println("this.setMidSpeed(): "+this.setMidSpeed());
         }
         this.pg.beginDraw();
             this.pg.clear();

@@ -5,6 +5,8 @@ volatile boolean encoderMoved = false;
 volatile byte encoderValue = 0;
 volatile int relativeValue = 0;
 volatile int directionValue = 0;
+volatile int oldDirectionValue = 0;
+volatile int newDirectionValue = 0;
 
 void setup() {
 
@@ -24,7 +26,7 @@ void loop(){
   if ( encoderMoved ) {
     encoderMoved = false;    
     Serial.print("dir ");
-    Serial.println(directionValue);
+    Serial.println(newDirectionValue);
   }
 
 }
@@ -45,6 +47,11 @@ void updateEncoder(){
   
   if( old_vs_new == B1101 ||  old_vs_new == B0100 ||  old_vs_new == B0010 ||  old_vs_new == B1011) directionValue = 1;
   if( old_vs_new == B1110 ||  old_vs_new == B0111 ||  old_vs_new == B0001 ||  old_vs_new == B1000) directionValue = -1;
+  
+  if(oldDirectionValue == directionValue)
+    newDirectionValue = directionValue;
+  
+  oldDirectionValue = directionValue;
   
   encoderValue = newEncodedValue; //store this value for next time
 }

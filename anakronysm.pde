@@ -65,17 +65,13 @@ void setup() {
   video.play();
 
 
-  if(debug){
-    if (frameCount % 30 == 1) {
-      int fps = Math.round(frameRate);
-      frame.setTitle(fps + "fps");
-    }
-  }
+
 
 }
 
 
 void draw() {
+
 
   updateLeap();
 
@@ -88,6 +84,17 @@ void draw() {
   //bridge.send("dir", abs(video.speed)/video.speed);
   bridge.send("dir", video.direction);
 
+  if(debug){
+    if (frameCount % 30 == 1) {
+      int fps = Math.round(frameRate);
+      frame.setTitle(fps + "fps");
+    }
+  }
+
+  pushStyle();
+  fill(255);
+  ellipse(width-100, height-100, millis()/10%100, millis()/10%100);
+  popStyle();
 }
 
 void keyPressed() {
@@ -197,8 +204,11 @@ void serialEvent(Serial p) {
         // On peut "router" les messages en comparant le premier Ã©lÃ©ment :
         if ( messageFirstElement.equals("dir") ){
             //manivelleValue = messageSecondElement;
-            video.tick();
-            video.setDirection(messageSecondElement);
+            if(video != null) {
+              video.tick();
+              video.setDirection(messageSecondElement);
+            }
+            
         }
     }
 }
