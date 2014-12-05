@@ -90,6 +90,11 @@ class Videos {
             this.getCurrentVideo().volume(0);
             this.getCurrentVideo().read();
             this.getCurrentVideo().volume(0);
+            if(this.getCurrentVideo().pastEnd()){
+                this.next();
+            }else if(this.getCurrentVideo().pastStart()){
+                this.previous();
+            }
         }
         if(this.timeout.isFinished()){
             println("this.setMidSpeed(): "+this.setMidSpeed());
