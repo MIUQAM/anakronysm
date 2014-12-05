@@ -1,3 +1,13 @@
+/**
+* Project : anakronysm 
+* Author : Pier-Olivier Bourgault, Marc-Antoine Brodeur, Alexandre d'Avignon, Erwan d'Orgeville, Pier Luc Marrier
+* Author URI : http://github.com/MIUQAM
+* License : MIT
+* Version : 1.0.0
+* 
+*/
+
+
 import de.voidplus.leapmotion.*;
 import processing.serial.*;
 
@@ -17,7 +27,7 @@ float manivelleValue = 0;
 
 
 Video video;
-ArrayList<String> videoList = new ArrayList<String>();
+ArrayList<String> videos = new ArrayList<String>();
 
 
 
@@ -36,8 +46,22 @@ void setup() {
   leap = new LeapMotion(this);
 
 
-  videoList.add("videos/Through_The_Mirror.ogv");
-  video = new Video(this, videoList);
+  videos.add("videos/Through_The_Mirror.ogv");
+  videos.add("videos/1920/1_Steamboat_1928.ogv");
+  videos.add("videos/1920/2_Steamboat_1928.ogv");
+  videos.add("videos/1920/3_skeleton dance_1929.ogv");
+  videos.add("videos/1920/4_skeleton dance_1929.ogv");
+  videos.add("videos/1920/5_skeleton dance_1929.ogv");
+  videos.add("videos/1920/6_skeleton dance_1929.ogv");
+  videos.add("videos/1930/7_Woos Whoopee_1930.ogv");
+  videos.add("videos/1930/8_Geti a Horse_1930.ogv");
+  videos.add("videos/1930/9_Bosko the Doughboy_1931.ogv");
+  videos.add("videos/1930/10_Red Hot Mamma_1934.ogv");
+  videos.add("videos/1940/11_Pinocchio_1940.ogv");
+  videos.add("videos/1950/12_Peter Pan_1953.ogv");
+  videos.add("videos/1950/13_Alice in Wonderland_1951.ogv");
+  videos.add("videos/1960/14_101 Dalmatians_1961.ogv");
+  video = new Video(this, videos);
   video.play();
 
 
