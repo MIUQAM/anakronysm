@@ -18,6 +18,11 @@ class Videos {
 
     ArrayList<Video> videos;
 
+    //direction
+    //          1 == forward
+    //         -1 == backward
+    int direction = 1;
+
     public Videos (PApplet stage, ArrayList<String> sources){
         this.videos = new ArrayList<Video>();
         this.sources = sources;
@@ -126,7 +131,10 @@ class Videos {
     }
 
     public float setMidSpeed(){
-        float speed = (float)this.tickCount/10;
+        float speed = (float)this.tickCount/1000;
+        if(this.direction == -1){
+            this.speed = -this.speed;
+        }
         if(speed == 0){
             this.pause();
         }
@@ -204,6 +212,15 @@ class Videos {
 
     private Video getCurrentVideo(){
         return this.videos.get(currentSourceIndex);
+    }
+
+    public int getDirection(){
+        return this.direction;
+    }
+
+    public int setDirection(int direction){
+        this.direction = direction;
+        return this.getDirection();
     }
 
 }
