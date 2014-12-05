@@ -194,6 +194,10 @@ class Videos {
         return currentSourceIndex;
     }
 
+    private void goToEnd(){
+        this.getCurrentVideo().goToEnd();
+    }
+
     // private void resetVideo(){
     //     if(this.videos.size() <= 0){
     //         for(int i = 0; i < this.sources.size(); i++){
