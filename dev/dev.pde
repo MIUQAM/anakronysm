@@ -26,11 +26,11 @@ void setup() {
 
   // Affiche les noms des ports.
   println(Serial.list());
-  //serial = new Serial(this, portName, 57600);
+  serial = new Serial(this, portName, 57600);
   // Indiquer a l'instance serial de lancer la fonction serialEvent()
   // lorsque l'octet 13 est recu. L'octet 13 est envoye par
   // l'Arduino pour indiquer la fin du message
-  //serial.bufferUntil(13);
+  serial.bufferUntil(13);
 
 
   leap = new LeapMotion(this);
@@ -171,7 +171,9 @@ void serialEvent(Serial p) {
         messageSecondElement = int(elements[1]);
         // On peut "router" les messages en comparant le premier Ã©lÃ©ment :
         if ( messageFirstElement.equals("direction") ){
-            manivelleValue = messageSecondElement;
+            //manivelleValue = messageSecondElement;
+            video.tick();
+            // video.setDirection(messageSecondElement);
         }
     }
 }

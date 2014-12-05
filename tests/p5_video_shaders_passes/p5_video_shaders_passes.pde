@@ -192,12 +192,13 @@ void updatePass2() {
   pass2.beginDraw();
   pass2.clear();
 
-  /*for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 5; i++) {
     colorizeCircle.set("maskTexture_f"+i, fingerMaskArray.get(i).draw());
   }
 
-  pass2.shader(colorizeCircle);*/
+  
   pass2.shader(effect1);
+  //pass2.shader(colorizeCircle);
 
   pass2.image(video, 0, 0, width, height);
   pass2.resetShader();
