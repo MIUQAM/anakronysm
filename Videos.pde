@@ -8,6 +8,7 @@ class Videos {
     boolean available = false;
     float speed = 1;
     int tickCount = 0;
+    int direction = 1;
 
     PApplet stage;
 
@@ -132,8 +133,12 @@ class Videos {
     }
 
     public float setMidSpeed(){
-        float speed = (float)this.tickCount/100;
+<<<<<<< HEAD
+        
 
+=======
+        float speed = (float)this.tickCount/1000;
+>>>>>>> 983cdc1fb105f7b8e5aa647887f05219ea82c951
         if(speed == 0){
             this.pause();
         }
@@ -141,7 +146,17 @@ class Videos {
             if(!this.getPlaying()){
                 this.play();
             }
-            this.setSpeed(direction * speed);
+<<<<<<< HEAD
+            
+=======
+            if(tickCount > 0){
+                this.direction = 1;
+            }
+            else{
+                this.direction = -1;
+            }
+            this.setSpeed(speed);
+>>>>>>> 983cdc1fb105f7b8e5aa647887f05219ea82c951
         }
         this.tickCount = 0;
         return this.getSpeed();
@@ -164,9 +179,9 @@ class Videos {
         return this.getTime();
     }
 
-    public float tick(){
+    public float tick(int direction){
         // this.setTime(this.getTime() + 1.0/frameRate);
-        this.tickCount++;
+        this.tickCount+= direction;
         return this.getTime();
     }
 
@@ -198,21 +213,6 @@ class Videos {
     private void goToEnd(){
         this.getCurrentVideo().goToEnd();
     }
-
-    // private void resetVideo(){
-    //     if(this.videos.size() <= 0){
-    //         for(int i = 0; i < this.sources.size(); i++){
-    //             this.videos.add(new Video(this.stage, this.sources.get(i)));
-    //         }
-    //     }
-    //     this.getCurrentVideo().resetVideo();
-    // }
-
-    // private void changeVideo(int index){
-    //     this.getCurrentVideo().stop();
-    //     this.currentSourceIndex = index;
-    //     this.getCurrentVideo().play();
-    // }
 
     private Video getCurrentVideo(){
         return this.videos.get(currentSourceIndex);
