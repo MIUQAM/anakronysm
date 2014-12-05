@@ -43,6 +43,10 @@ class Video {
         this.video.jump(time);
     }
 
+    public void goToEnd(){
+        this.jump(this.duration());
+    }
+
     public float time(){
         return this.video.time();
     }
