@@ -192,6 +192,7 @@ class Videos {
         }
         // this.resetVideo();
         this.play();
+        this.goToEnd();
         return currentSourceIndex;
     }
 
