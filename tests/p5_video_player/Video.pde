@@ -51,6 +51,20 @@ class Video {
         this.video.volume(volume);
     }
 
+    public boolean pastEnd(){
+        if(this.time() >= this.duration()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean pastStart(){
+        if(this.time() <= 0){
+            return true;
+        }
+        return false;
+    }
+
     public void read(){
         this.volume(0);
         this.video.read();
@@ -59,6 +73,10 @@ class Video {
 
     public void speed(float speed){
         this.video.speed(speed);
+    }
+
+    private float duration(){
+        return this.video.duration(); 
     }
 
 }
