@@ -84,8 +84,9 @@ void draw() {
   noStroke();
   image(video.getMovie(), 0, 0);
 
-  println(bridge.send("speed", abs(video.speed)));
-  println(bridge.send("dir", abs(video.speed)/video.speed));
+  bridge.send("speed", abs(video.speed));
+  //bridge.send("dir", abs(video.speed)/video.speed);
+  bridge.send("dir", video.direction);
 
 }
 
@@ -194,10 +195,10 @@ void serialEvent(Serial p) {
         messageFirstElement = elements[0];
         messageSecondElement = int(elements[1]);
         // On peut "router" les messages en comparant le premier Ã©lÃ©ment :
-        if ( messageFirstElement.equals("direction") ){
+        if ( messageFirstElement.equals("dir") ){
             //manivelleValue = messageSecondElement;
             video.tick();
-            // video.setDirection(messageSecondElement);
+            video.setDirection(messageSecondElement);
         }
     }
 }

@@ -23,7 +23,7 @@ void loop(){
   
   if ( encoderMoved ) {
     encoderMoved = false;    
-    Serial.print("direction ");
+    Serial.print("dir ");
     Serial.println(directionValue);
   }
 
