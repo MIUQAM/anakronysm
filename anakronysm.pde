@@ -51,7 +51,7 @@ void setup() {
   videos.add("videos/1920/2_Steamboat_1928.ogv");
   videos.add("videos/1920/3_skeleton dance_1929.ogv");
   videos.add("videos/1920/4_skeleton dance_1929.ogv");
-  videos.add("videos/1920/5_skeleton dance_1929.ogv");
+  /*videos.add("videos/1920/5_skeleton dance_1929.ogv");
   videos.add("videos/1920/6_skeleton dance_1929.ogv");
   videos.add("videos/1930/7_Woos Whoopee_1930.ogv");
   videos.add("videos/1930/8_Geti a Horse_1930.ogv");
@@ -60,9 +60,9 @@ void setup() {
   videos.add("videos/1940/11_Pinocchio_1940.ogv");
   videos.add("videos/1950/12_Peter Pan_1953.ogv");
   videos.add("videos/1950/13_Alice in Wonderland_1951.ogv");
-  videos.add("videos/1960/14_101 Dalmatians_1961.ogv");
+  videos.add("videos/1960/14_101 Dalmatians_1961.ogv");*/
   video = new Videos(this, videos);
-  video.play();
+  
 
 
 
@@ -80,9 +80,11 @@ void draw() {
   noStroke();
   image(video.getMovie(), 0, 0);
 
-  bridge.send("speed", abs(video.speed));
+  //bridge.send("modul8/ctrl_layer_movie_playDirection", abs(video.speed));
+
+  //bridge.send("speed", abs(video.speed));
   //bridge.send("dir", abs(video.speed)/video.speed);
-  bridge.send("dir", video.direction);
+  //bridge.send("dir", video.direction);
 
   if(debug){
     if (frameCount % 30 == 1) {
@@ -96,36 +98,6 @@ void draw() {
   ellipse(width-100, height-100, millis()/10%100, millis()/10%100);
   popStyle();
 }
-
-void keyPressed() {
-    // println("keyCode: "+keyCode);
-    if(keyCode == 37){
-       //Left
-       println("video.changeSpeed(-0.1): "+video.changeSpeed(-0.1));
-    }else if(keyCode == 39){
-        //Right
-        println("video.changeSpeed(0.1): "+video.changeSpeed(0.1));
-    }
-
-    else if(key == '1'){
-        //Right
-        println("video.next(): "+video.next());
-    }else if(key == '2'){
-        //Right
-        println("video.previous(): "+video.previous());
-    }
-
-    //Space
-    else if(keyCode == 32){
-        video.tick();
-    }
-
-    //Command
-    else if(keyCode == 157){
-        println("video.togglePlay(): "+video.togglePlay());
-    }
-}
-
 
 void updateLeap(){
 
@@ -205,8 +177,14 @@ void serialEvent(Serial p) {
         if ( messageFirstElement.equals("dir") ){
             //manivelleValue = messageSecondElement;
             if(video != null) {
-              video.tick();
-              video.setDirection(messageSecondElement);
+              video.tick(messageSecondElement);
+              //video.setDirection(messageSecondElement);
+
+                if(messageSecondElement == -1.0){
+                  bridge.send("md8key/ctrl_layer_movie_playDirection/1", 0.0);
+                } else {
+                  bridge.send("md8key/ctrl_layer_movie_playDirection/1", 1.0);
+                }
             }
             
         }

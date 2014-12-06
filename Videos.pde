@@ -8,8 +8,6 @@ class Videos {
     boolean available = false;
     float speed = 1;
     int tickCount = 0;
-    int direction = 1;
-
     PApplet stage;
 
     TimeoutP5 timeout;
@@ -24,6 +22,8 @@ class Videos {
     //         -1 == backward
     int direction = 1;
 
+    ArrayList<PImage> videosFrames = new ArrayList<PImage>();
+
     public Videos (PApplet stage, ArrayList<String> sources){
         this.videos = new ArrayList<Video>();
         this.sources = sources;
@@ -35,6 +35,25 @@ class Videos {
         if(this.videos.size() <= 0){
             for(int i = 0; i < this.sources.size(); i++){
                 this.videos.add(new Video(this.stage, this.sources.get(i)));
+                int z = 0;
+
+                videos.get(i).play();
+
+                while(z < videos.get(i).getMovie().duration()*30){
+                    videos.get(i).getMovie().read();
+                    PImage tempPI = createImage(width, height, RGB);
+                    //tempPI = videos.get(i).getMovie().copy();
+                    tempPI.copy(videos.get(i).getMovie(), 0, 0, width, height, 0, 0, width, height);
+                    //tempPI = new PImage(videos.get(i).getMovie().getImage());
+                    videosFrames.add(tempPI);
+                    println("frame " + z);
+                    z++;
+
+                }
+
+                videos.get(i).jump(0);
+                videos.get(i).pause();
+
             }
         }
         this.pg = createGraphics(width, height, OPENGL);
@@ -133,7 +152,7 @@ class Videos {
     }
 
     public float setMidSpeed(){
-        float speed = (float)this.tickCount/1000;
+        float speed = (float)this.tickCount/100;
         if(speed == 0){
             this.pause();
         }
