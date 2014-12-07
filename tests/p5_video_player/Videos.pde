@@ -8,7 +8,6 @@ class Videos {
     boolean available = false;
     float speed = 1;
     int tickCount = 0;
-    int direction = 1;
 
     PApplet stage;
 

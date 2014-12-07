@@ -61,7 +61,7 @@ void keyPressed() {
 
     //Space
     else if(keyCode == 32){
-        video.tick();
+        video.tick(+100);
     }
 
     //Command
