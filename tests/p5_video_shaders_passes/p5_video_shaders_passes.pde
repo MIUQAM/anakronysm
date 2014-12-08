@@ -328,7 +328,7 @@ void updatePass2(String fx) {
     pass2.clear();
     float x = map(handPos.x, 0, width, 0.0, 1.0);
     float y = map(handPos.y, 0, height, 0.0, 1.0);
-    float z = map(handPos.z, 0, 100, 0.0, 1.0);
+    float z = map(handPos.z, 0, 100, 1.0, 0.85);
     glow.set("intensity", z);
     pass2.shader(glow);
     pass2.image(video, 0, 0, width, height);

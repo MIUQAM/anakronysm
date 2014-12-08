@@ -91,7 +91,7 @@ class Video_upgraded {
 
 
     public void play() {
-        this.loader.start();
+        this.loader.run();
     }
 
     public void stop(){

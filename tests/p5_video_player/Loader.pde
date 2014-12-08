@@ -11,6 +11,7 @@ public class Loader extends Thread {
     private int currentFrame = 0;
     private int updateDelay = 20;
     private float health = 0;
+    private float loops = 0;
 
     private String source;
 
@@ -47,9 +48,14 @@ public class Loader extends Thread {
             }
             println("Images loaded : " + imgs.size());
 
-            clean();
-
             health = (float)found / threshold;
+
+            loops++;
+
+            if(loops >= 50){
+                clean();
+                loops = 0;
+            }
 
             // Sleep
             try {

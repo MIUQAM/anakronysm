@@ -94,10 +94,10 @@ class Videos_upgraded {
     }
 
     public void update(){
-        if (this.available == false && this.getCurrentVideo().available()) {
+        /*if (this.available == false && this.getCurrentVideo().available()) {
             this.available = true;
-        }
-        if(this.available){
+        }*/
+        //if(this.available){
             // println("reading");
             // this.getCurrentVideo().read();
             if(this.getCurrentVideo().pastEnd()){
@@ -105,7 +105,7 @@ class Videos_upgraded {
             }else if(this.getCurrentVideo().pastStart()){
                 this.previous();
             }
-        }
+        //}
         if(this.timeout.isFinished()){
             println("this.setMidSpeed(): "+this.setMidSpeed());
         }
