@@ -116,6 +116,8 @@ public class Loader extends Thread {
             return "00" + value;
         } else  if (value < 1000) {
             return "0" + value;
+        } else  if (value < 10000) {
+            return "" + value;
         } else {
             return Integer.toString(value);
         }
