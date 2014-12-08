@@ -6,7 +6,7 @@
 * Description here
 */
 
-Videos_upgraded video;
+Videos video;
 ArrayList<String> videos = new ArrayList<String>();
 
 void setup() {
@@ -28,7 +28,7 @@ void setup() {
     // videos.add("../../../data/videos/1950/12_Peter Pan_1953.ogv");
     // videos.add("../../../data/videos/1950/13_Alice in Wonderland_1951.ogv");
     // videos.add("../../../data/videos/1960/14_101 Dalmatians_1961.ogv");
-    video = new Videos_upgraded(this, videos);
+    video = new Videos(this, videos);
     video.play();
     // video.pause();
     // video.setSpeed(0.00000000001);
