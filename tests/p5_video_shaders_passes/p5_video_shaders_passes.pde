@@ -17,8 +17,13 @@ ArrayList<FingerMask> fingerMaskArray = new ArrayList<FingerMask>();
 
 PVector handPos = new PVector();
 
+ShadersManager shadersManager = new ShadersManager();
+
 PShader sepialize;
 PShader effect1;
+PShader effect2;
+PShader effect3;
+PShader effect4;
 PShader blackAndWhite;
 PShader swirl;
 PShader glow;
@@ -52,16 +57,21 @@ void setup() {
 
   sepialize = loadShader("sepia.glsl");
   effect1 = loadShader("effect1.glsl");
+  effect2 = loadShader("effect2.glsl");
+  effect3 = loadShader("effect3.glsl");
+  effect4 = loadShader("effect4.glsl");
   blackAndWhite = loadShader("bNw.glsl");
-  //swirl = loadShader("swirl.frag", "swirl.vert");
-  swirl = loadShader("swirl.glsl");
-  deform = loadShader("deform.glsl");
-  zPixels = loadShader("3dpixels.glsl");
-  fisheye = loadShader("fisheye.glsl");
-  dataMosh = loadShader("datamosh.glsl");
+  colorizeCircle = loadShader("colorizeCircle.glsl");
   glow = loadShader("glow.glsl");
 
-  colorizeCircle = loadShader("colorizeCircle.glsl");
+  /*shadersManager.add("effect1");
+  shadersManager.add("effect2");
+  shadersManager.add("effect3");
+  shadersManager.add("effect4");
+  shadersManager.add("colorizeCircle");*/
+  shadersManager.add("glow");
+
+  shadersManager.switchShader();
 
   brush = loadImage("brush.png");
 }
@@ -75,7 +85,7 @@ void draw() {
   updateLeap();
 
   updatePass1();
-  updatePass2();
+  updatePass2(shadersManager.getCurrentShader());
 
   background(0);
   image(pass1, 0, 0);
@@ -147,6 +157,12 @@ void leapOnExit(){
     // println("Leap Motion Exit");
 }
 
+void keyPressed(){
+  if(key == ' '){
+    shadersManager.switchShader();
+  }
+}
+
 void updatePass1() {
   pass1.beginDraw();
   pass1.clear();
@@ -175,32 +191,158 @@ void updatePass1() {
   pass1.endDraw();
 }
 
-void updatePass2() {
+void updatePass2(String fx) {
+
+  pass2.beginDraw();
+  
+
 
   if(pass2Visible && pass2Alpha < 255){
     pass2Alpha+=2;
   } else if(!pass2Visible && pass2Alpha > 0){
     pass2Alpha-=2;
   }
-  //effect1.set("enable", true);
-  effect1.set("a", norm(pass2Alpha, 0, 255));
-  effect1.set("x", norm(handPos.x, 0, 800));
-  effect1.set("y", norm(handPos.y, 0, 600));
-  effect1.set("z", norm(handPos.z, 0, 200));
 
-
-  pass2.beginDraw();
-  pass2.clear();
-
-  for (int i = 0; i < 5; i++) {
-    colorizeCircle.set("maskTexture_f"+i, fingerMaskArray.get(i).draw());
+  if(fx.equals("effect1")){
+    pass2.clear();
+    effect1.set("a", norm(pass2Alpha, 0, 255));
+    effect1.set("x", norm(handPos.x, 0, width));
+    effect1.set("y", norm(handPos.y, 0, height));
+    effect1.set("z", norm(handPos.z, 0, 200));
+    pass2.shader(effect1);
+    pass2.image(video, 0, 0, width, height);
   }
 
-  
-  pass2.shader(effect1);
-  //pass2.shader(colorizeCircle);
+  else if(fx.equals("effect2")){
+    pass2.clear();
+    float x = map(handPos.x, 0, width, -1.0, 1.0);
+    float y = map(handPos.y, 0, height, -1.0, 1.0);
+    float z = map(handPos.z, 0, 100, 0, 20);
+    
+    effect2.set("a", norm(pass2Alpha, 0, 255));
+    effect2.set("x", abs(x) + 0.1);
+    effect2.set("y", abs(y) + 0.1);
+    effect2.set("red", 1.0);
+    effect2.set("green", 0.0);
+    effect2.set("blue", 0.0);
+    pass2.shader(effect2);
+    pass2.image(video, x*z*4, y*z*4, width, height);
+    pass2.resetShader();
 
-  pass2.image(video, 0, 0, width, height);
+    effect2.set("a", norm(pass2Alpha, 0, 255));
+    effect2.set("x", abs(x) + 0.1);
+    effect2.set("y", abs(y) + 0.1);
+    effect2.set("red", 0.0);
+    effect2.set("green", 1.0);
+    effect2.set("blue", 0.0);
+    pass2.shader(effect2);
+    pass2.image(video, x*z*3, y*z*3, width, height);
+    pass2.resetShader();
+
+    effect2.set("a", norm(pass2Alpha, 0, 255));
+    effect2.set("x", abs(x) + 0.1);
+    effect2.set("y", abs(y) + 0.1);
+    effect2.set("red", 0.0);
+    effect2.set("green", 0.0);
+    effect2.set("blue", 1.0);
+    pass2.shader(effect2);
+    pass2.image(video, x*z*2, y*z*2, width, height);
+
+  }
+
+  else if(fx.equals("effect3")){
+    pass2.clear();
+    float x = map(handPos.x, 0, width, -1.0, 1.0);
+    float y = map(handPos.y, 0, height, -1.0, 1.0);
+    float z = map(handPos.z, 0, 100, 0, 20);
+    
+    effect3.set("a", norm(pass2Alpha, 0, 255));
+    effect3.set("x", abs(x) + 0.1);
+    effect3.set("y", abs(y) + 0.1);
+    effect3.set("red", 1.0);
+    effect3.set("green", 0.0);
+    effect3.set("blue", 0.0);
+    pass2.shader(effect3);
+    pass2.image(video, x*z*4, y*z*4, width, height);
+    pass2.resetShader();
+
+    effect3.set("a", norm(pass2Alpha, 0, 255));
+    effect3.set("x", abs(x) + 0.1);
+    effect3.set("y", abs(y) + 0.1);
+    effect3.set("red", 0.0);
+    effect3.set("green", 1.0);
+    effect3.set("blue", 0.0);
+    pass2.shader(effect3);
+    pass2.image(video, x*z*3, y*z*3, width, height);
+    pass2.resetShader();
+
+    effect3.set("a", norm(pass2Alpha, 0, 255));
+    effect3.set("x", abs(x) + 0.1);
+    effect3.set("y", abs(y) + 0.1);
+    effect3.set("red", 0.0);
+    effect3.set("green", 0.0);
+    effect3.set("blue", 1.0);
+    pass2.shader(effect3);
+    pass2.image(video, x*z*2, y*z*2, width, height);
+
+  }
+
+  else if(fx.equals("effect4")){
+    pass2.clear();
+    float x = map(handPos.x, 0, width, -1.0, 1.0);
+    float y = map(handPos.y, 0, height, -1.0, 1.0);
+    float z = map(handPos.z, 0, 100, 0, 20);
+    
+    effect4.set("a", norm(pass2Alpha, 0, 255));
+    effect4.set("x", abs(x) + 0.1);
+    effect4.set("y", abs(y) + 0.1);
+    effect4.set("red", 1.0);
+    effect4.set("green", 0.0);
+    effect4.set("blue", 0.0);
+    pass2.shader(effect4);
+    pass2.image(video, x*z*4, y*z*4, width, height);
+    pass2.resetShader();
+
+    effect4.set("a", norm(pass2Alpha, 0, 255));
+    effect4.set("x", abs(x) + 0.1);
+    effect4.set("y", abs(y) + 0.1);
+    effect4.set("red", 0.0);
+    effect4.set("green", 1.0);
+    effect4.set("blue", 0.0);
+    pass2.shader(effect4);
+    pass2.image(video, x*z*3, y*z*3, width, height);
+    pass2.resetShader();
+
+    effect4.set("a", norm(pass2Alpha, 0, 255));
+    effect4.set("x", abs(x) + 0.1);
+    effect4.set("y", abs(y) + 0.1);
+    effect4.set("red", 0.0);
+    effect4.set("green", 0.0);
+    effect4.set("blue", 1.0);
+    pass2.shader(effect4);
+    pass2.image(video, x*z*2, y*z*2, width, height);
+
+  }
+
+  else if(fx.equals("glow")){
+    pass2.clear();
+    float x = map(handPos.x, 0, width, 0.0, 1.0);
+    float y = map(handPos.y, 0, height, 0.0, 1.0);
+    float z = map(handPos.z, 0, 100, 0.0, 1.0);
+    glow.set("intensity", z);
+    pass2.shader(glow);
+    pass2.image(video, 0, 0, width, height);
+  }
+
+  else if(fx.equals("colorizeCircle")){
+    pass2.clear();
+    for (int i = 0; i < 5; i++) {
+      colorizeCircle.set("maskTexture_f"+i, fingerMaskArray.get(i).draw());
+    }
+    pass2.shader(colorizeCircle);
+    pass2.image(video, 0, 0, width, height);
+  }
+
   pass2.resetShader();
 
   pass2.endDraw();

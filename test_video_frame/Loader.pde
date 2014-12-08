@@ -11,6 +11,7 @@ public class Loader extends Thread {
   private int currentFrame = 0;
   private int updateDelay = 20;
   private float health = 0;
+  private float loops = 0;
 
   public Loader(PApplet p, ConcurrentHashMap<Integer, PImage> imgs, int threshold, int framesTotal) {
     this.p = p;
@@ -25,7 +26,6 @@ public class Loader extends Thread {
 
       int found = 0;
 
-      // Chargement des images de papillon
       for (int i=0; i<threshold; i++) {
         int frame = (i + currentFrame - (threshold/2)) % framesTotal;
         if (frame <0) frame = framesTotal + frame;
@@ -38,9 +38,15 @@ public class Loader extends Thread {
         }
       }
 
-      clean();
-
+      
       health = (float)found / threshold;
+
+      loops++;
+
+      if(loops >= 50){
+        clean();
+        loops = 0;
+      }
 
       // Sleep
       try {
