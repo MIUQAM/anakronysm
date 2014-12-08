@@ -4,7 +4,7 @@ public class FingerMask {
   float posX;
   float posY;
   float size = 0.0;
-  float sizeFactor = 2.0;
+  float sizeFactor = 3.0;
   boolean show = false;
 
   public FingerMask() {
