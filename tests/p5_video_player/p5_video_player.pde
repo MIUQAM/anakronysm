@@ -46,10 +46,10 @@ void keyPressed() {
     // println("keyCode: "+keyCode);
     if(keyCode == 37){
        //Left
-       println("video.changeSpeed(-0.1): "+video.changeSpeed(-0.1));
+       println("video.changeSpeed(-0.1): "+video.changeSpeed(-0.01));
     }else if(keyCode == 39){
         //Right
-        println("video.changeSpeed(0.1): "+video.changeSpeed(0.1));
+        println("video.changeSpeed(0.1): "+video.changeSpeed(0.01));
     }
 
     else if(key == '1'){

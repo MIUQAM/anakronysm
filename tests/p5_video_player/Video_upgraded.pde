@@ -97,7 +97,6 @@ class Video_upgraded {
 
     public void stop(){
         this.loader.stop = true;
-        // this.loader = null;
     }
 
     public void clean(){
