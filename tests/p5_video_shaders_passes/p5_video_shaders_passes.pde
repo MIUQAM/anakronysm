@@ -25,17 +25,13 @@ PShader effect2;
 PShader effect3;
 PShader effect4;
 PShader blackAndWhite;
-PShader swirl;
 PShader glow;
-PShader fisheye;
-PShader deform;
-PShader zPixels;
+PShader glow2;
 PShader colorizeCircle;
-PShader dataMosh;
-float circleRadius = 100.0;
 
 void setup() {
   size(800, 600, OPENGL);
+  frameRate(60);
   
   leap = new LeapMotion(this);
 
@@ -63,13 +59,15 @@ void setup() {
   blackAndWhite = loadShader("bNw.glsl");
   colorizeCircle = loadShader("colorizeCircle.glsl");
   glow = loadShader("glow.glsl");
+  glow2 = loadShader("glow2.glsl");
 
-  /*shadersManager.add("effect1");
+  shadersManager.add("effect1");
   shadersManager.add("effect2");
   shadersManager.add("effect3");
   shadersManager.add("effect4");
-  shadersManager.add("colorizeCircle");*/
+  shadersManager.add("colorizeCircle");
   shadersManager.add("glow");
+  shadersManager.add("glow2");
 
   shadersManager.switchShader();
 
@@ -326,11 +324,19 @@ void updatePass2(String fx) {
 
   else if(fx.equals("glow")){
     pass2.clear();
-    float x = map(handPos.x, 0, width, 0.0, 1.0);
-    float y = map(handPos.y, 0, height, 0.0, 1.0);
-    float z = map(handPos.z, 0, 100, 1.0, 0.85);
+    float z = map(handPos.z, 0, 100, 0.85, 1.0);
+    glow.set("a", norm(pass2Alpha, 0, 255));
     glow.set("intensity", z);
     pass2.shader(glow);
+    pass2.image(video, 0, 0, width, height);
+  }
+
+  else if(fx.equals("glow2")){
+    pass2.clear();
+    float z = map(handPos.z, 0, 100, 0.001, 0.03);
+    glow2.set("a", norm(pass2Alpha, 0, 255));
+    glow2.set("intensity", z);
+    pass2.shader(glow2);
     pass2.image(video, 0, 0, width, height);
   }
 
