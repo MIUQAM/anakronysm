@@ -94,6 +94,8 @@ class Videos_upgraded {
     }
 
     public void update(){
+        //println("frameCount: "+frameCount);
+        //println("millis(): "+millis());
         /*if (this.available == false && this.getCurrentVideo().available()) {
             this.available = true;
         }*/
@@ -111,6 +113,7 @@ class Videos_upgraded {
         }
         // if(this.available){
             if(this.getPImage() != null){
+                this.getCurrentVideo().update();
                 this.pg.beginDraw();
                     this.pg.clear();
                     this.pg.image(this.getPImage(), 0, 0, width, height);
