@@ -11,7 +11,7 @@ class Video_upgraded {
     Loader loader;
 
     // int framesTotal = 409;
-    int framesTotal = 100;
+    int framesTotal = 12243;
     float timehead = 0;
     int prevFrame = 0;
     int currentFrame = 0;
