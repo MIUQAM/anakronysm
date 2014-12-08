@@ -7,7 +7,7 @@ public class Loader extends Thread {
     private int threshold;
     private int framesTotal;
 
-    private boolean stop = false;
+    private boolean stop = true;
     private int currentFrame = 0;
     private int updateDelay = 20;
     private float health = 0;
@@ -46,7 +46,7 @@ public class Loader extends Thread {
                     //System.out.println("Already exists " + frame);
                 }
             }
-            println("Images loaded : " + imgs.size());
+            // println("Images loaded : " + imgs.size());
 
             health = (float)found / threshold;
 

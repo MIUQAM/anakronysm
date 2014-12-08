@@ -30,6 +30,7 @@ class Video_upgraded {
         // Source should be something like "../../../data/videos/Through_The_Mirror/IMG_"
         loader = new Loader(this.p, imgs, threshold, framesTotal, source);
         loader.setUpdateDelay(1);
+        loader.start();
     }
 
     void setSpeed(float speed){
@@ -91,11 +92,11 @@ class Video_upgraded {
 
 
     public void play() {
-        this.loader.run();
+        this.loader.stop = false;
     }
 
     public void stop(){
-        // this.loader.stop = true;
+        this.loader.stop = true;
         // this.loader = null;
     }
 
