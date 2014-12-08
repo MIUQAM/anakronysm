@@ -54,10 +54,27 @@ class Video_upgraded {
         return framesTotal;
     }
 
-    PImage getPImage() {
+    public void update() {
         currentFrame  = floor(timehead);
         loader.setFrame(currentFrame);
 
+        if (loader.ready()) {
+            speed = (mouseX - width/2) / 100.0;
+            //println("speed: "+speed);
+            timehead += speed;
+            timehead = timehead % (framesTotal-1);
+            if(timehead < 0) {
+                timehead = framesTotal -1 ;
+            }
+        }
+
+        //textSize(12);
+        //println("speed " + speed);
+        //println("frame drop " + frameDrop);
+        //println("loader health " + loader.getHealth());
+    }
+
+    PImage getPImage() {
         PImage img;
 
         if (imgs.get(currentFrame) != null) {
@@ -71,21 +88,6 @@ class Video_upgraded {
             img = null;
             // println("null");
         }
-
-        if (loader.ready()) {
-            // speed = (mouseX - width/2) / 100.0;
-            println("speed: "+speed);
-            timehead += speed;
-            timehead = timehead % (framesTotal-1);
-            if(timehead < 0) {
-                timehead = framesTotal -1 ;
-            }
-        }
-
-        textSize(12);
-        text("speed " + speed,40,40);
-        text("frame drop " + frameDrop,40,60);
-        text("loader health " + loader.getHealth(),40,80);
 
         return img;
     }

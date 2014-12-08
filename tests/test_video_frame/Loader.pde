@@ -31,7 +31,7 @@ public class Loader extends Thread {
         if (frame <0) frame = framesTotal + frame;
         if (!imgs.containsKey(frame)) {
           imgs.put(frame, p.loadImage("Sequence 1 "+fixedDigits(frame+1)+".jpg"));
-          //System.out.println("Loaded " + frame);
+          System.out.println("Loaded " + frame);
         } else {
           found++;
           //System.out.println("Already exists " + frame);

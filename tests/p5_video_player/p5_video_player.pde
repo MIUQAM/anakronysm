@@ -11,6 +11,7 @@ ArrayList<String> videos = new ArrayList<String>();
 
 void setup() {
     size(960, 540, OPENGL);
+    frameRate(30);
     // video = new Video(this, "../../../data/videos/Through_The_Mirror.ogv");
     videos.add("../../../data/videos/Through_The_Mirror/IMG_");
     // videos.add("../../../data/videos/1920/1_Steamboat_1928.ogv");
