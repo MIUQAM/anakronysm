@@ -14,9 +14,13 @@ Videos video;
 ArrayList<String> videos = new ArrayList<String>();
 ArrayList<Integer> videosLengths = new ArrayList<Integer>();
 
-Videos frame;
-ArrayList<String> frameL = new ArrayList<String>();
-ArrayList<Integer> frameLengths = new ArrayList<Integer>();
+Videos cadre;
+ArrayList<String> cadreL = new ArrayList<String>();
+ArrayList<Integer> cadreLengths = new ArrayList<Integer>();
+
+Videos intro;
+ArrayList<String> introL = new ArrayList<String>();
+ArrayList<Integer> introLengths = new ArrayList<Integer>();
 
 /* ========= ARDUINO ============ */
 String portName = "/dev/tty.usbmodem1411";
@@ -25,48 +29,18 @@ String messageFirstElement = "";
 int messageSecondElement = 0;
 float manivelleValue = 0;
 /* ============================== */
+
+boolean screensaving = false;
+TimeoutP5 timeoutScreenSaving;
+
+int tickCount = 0;
  
 void setup() {
-    size(960, 540, OPENGL);
+    size(853, 480, OPENGL);
     frameRate(30);
-    // video = new Video(this, "../../../data/videos/Through_The_Mirror.ogv");
+    
 
-
-    videos.add("../../../data/pngs/101 Dalmatians/101 Dalmatians- A Gentleman Always Has His Handkerchief Ready");
-    videosLengths.add(1823);
-
-    // videos.add("../../../data/pngs/Alice In Wonderland/Alice In Wonderland");
-    // videosLengths.add(1594);
-
-
-
-    // videos.add("../../../data/videos/Through_The_Mirror/IMG_");
-    // videosLengths.add(12243);
-
-    // videos.add("../../../data/videos/1920/2_Steamboat_1928.ogv");
-    // videos.add("../../../data/videos/1920/3_skeleton dance_1929.ogv");
-    // videos.add("../../../data/videos/1920/4_skeleton dance_1929.ogv");
-    // videos.add("../../../data/videos/1920/5_skeleton dance_1929.ogv");
-    // videos.add("../../../data/videos/1920/6_skeleton dance_1929.ogv");
-    // videos.add("../../../data/videos/1930/7_Woos Whoopee_1930.ogv");
-    // videos.add("../../../data/videos/1930/8_Geti a Horse_1930.ogv");
-    // videos.add("../../../data/videos/1930/9_Bosko the Doughboy_1931.ogv");
-    // videos.add("../../../data/videos/1930/10_Red Hot Mamma_1934.ogv");
-    // videos.add("../../../data/videos/1940/11_Pinocchio_1940.ogv");
-    // videos.add("../../../data/videos/1950/12_Peter Pan_1953.ogv");
-    // videos.add("../../../data/videos/1950/13_Alice in Wonderland_1951.ogv");
-    // videos.add("../../../data/videos/1960/14_101 Dalmatians_1961.ogv");
-    video = new Videos(this, videos, videosLengths);
-    video.play();
-    // video.pause();
-    // video.setSpeed(0.00000000001);
-
-    // frame = new Frame(this, "../../../data/videos/Film_strip/Film Strip 02_", 146);
-
-    frameL.add("../../../data/videos/Film_strip/Film Strip 02_");
-    frameLengths.add(146);
-    frame = new Videos(this, frameL, frameLengths);
-    frame.play();
+    setupVideos();
 
     println(Serial.list());
     try{
@@ -75,17 +49,70 @@ void setup() {
     }catch (Exception e) {
         println("Couldn't connect to Arduino");
     }
+
 }
 
 void draw() {
+
+    checkScreenSaver();
+
     // video.tick();
-    video.update();
-    frame.update();
+    if(screensaving){
+        intro.update();
+        intro.setSpeed(1);
+    }else{
+        video.update();
+        cadre.update();
+    }
+    // intro.update();
     background(0);
     // ellipse(width/2, height/2, millis()%100, millis()%100);
     noStroke();
-    image(video.getPg(), 0, 0);
-    image(frame.getPg(), 0, 0);
+    if(screensaving){
+        image(intro.getPg(), 0, 0);
+    }else{
+        image(video.getPg(), 0, 0);
+        image(cadre.getPg(), 0, 0);
+    }
+}
+
+void setupVideos(){
+    videos.add("../../../data/pngs/101 Dalmatians/101 Dalmatians- A Gentleman Always Has His Handkerchief Ready");
+    videosLengths.add(1823);
+
+    video = new Videos(this, videos, videosLengths);
+    video.play();
+
+
+    cadreL.add("../../../data/videos/Film_strip/Film Strip 02_");
+    cadreLengths.add(146);
+    cadre = new Videos(this, cadreL, cadreLengths);
+    cadre.play();
+
+    introL.add("../../../data/pngs/Intro_v2/Intro_v2_");
+    introLengths.add(224);
+    intro = new Videos(this, introL, introLengths);
+    intro.play();
+
+    this.timeoutScreenSaving = new TimeoutP5(10000, false);
+}
+
+void checkScreenSaver(){
+    if(screensaving){
+        if (tickCount >= 10 || tickCount <= -10){
+            screensaving = false;
+            this.timeoutScreenSaving.stop();
+        }
+    }else{
+        if(!this.timeoutScreenSaving.isStarted()){
+            this.timeoutScreenSaving.start();
+            screensaving = false;
+        }
+        if(this.timeoutScreenSaving.isFinished()){
+            screensaving = true;
+            tickCount = 0;
+        }
+    }
 }
 
 void keyPressed() {
@@ -93,7 +120,8 @@ void keyPressed() {
     //Space
     if(keyCode == 32){
         video.tick(-100);
-        frame.tick(-100);
+        cadre.tick(-100);
+        tickCount+= -100;
     }
 }
 
@@ -121,9 +149,10 @@ void serialEvent(Serial p) {
             if(video != null) {
               video.tick(messageSecondElement);
             }
-            if(frame != null){
-                frame.tick(messageSecondElement);
-            }   
+            if(cadre != null){
+                cadre.tick(messageSecondElement);
+            }
+            tickCount += messageSecondElement;
         }
     }
 }
