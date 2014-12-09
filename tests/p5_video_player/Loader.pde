@@ -36,7 +36,7 @@ public class Loader extends Thread {
                 int frame = (i + currentFrame - (threshold/2)) % framesTotal;
                 if (frame <0) frame = framesTotal + frame;
                 if (!imgs.containsKey(frame)) {
-                    String src = source+fixedDigits(frame+1)+".jpg";
+                    String src = source+fixedDigits(frame+1)+".png";
                     imgs.put(frame, p.loadImage(src));
                     // println("src: "+src);
 
@@ -52,7 +52,7 @@ public class Loader extends Thread {
 
             loops++;
 
-            if(loops >= 50){
+            if(loops >= 25){
                 clean();
                 loops = 0;
             }

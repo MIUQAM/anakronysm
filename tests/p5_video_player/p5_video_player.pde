@@ -10,6 +10,11 @@ import processing.serial.*;
 
 Videos video;
 ArrayList<String> videos = new ArrayList<String>();
+ArrayList<Integer> videosLengths = new ArrayList<Integer>();
+
+Videos frame;
+ArrayList<String> frameL = new ArrayList<String>();
+ArrayList<Integer> frameLengths = new ArrayList<Integer>();
 
 /* ========= ARDUINO ============ */
 String portName = "/dev/tty.usbmodem1411";
@@ -23,8 +28,19 @@ void setup() {
     size(960, 540, OPENGL);
     frameRate(30);
     // video = new Video(this, "../../../data/videos/Through_The_Mirror.ogv");
-    videos.add("../../../data/videos/Through_The_Mirror/IMG_");
-    // videos.add("../../../data/videos/1920/1_Steamboat_1928.ogv");
+
+
+    videos.add("../../../data/pngs/101 Dalmatians/101 Dalmatians- A Gentleman Always Has His Handkerchief Ready");
+    videosLengths.add(1823);
+
+    // videos.add("../../../data/pngs/Alice In Wonderland/Alice In Wonderland");
+    // videosLengths.add(1594);
+
+
+
+    // videos.add("../../../data/videos/Through_The_Mirror/IMG_");
+    // videosLengths.add(12243);
+
     // videos.add("../../../data/videos/1920/2_Steamboat_1928.ogv");
     // videos.add("../../../data/videos/1920/3_skeleton dance_1929.ogv");
     // videos.add("../../../data/videos/1920/4_skeleton dance_1929.ogv");
@@ -38,10 +54,17 @@ void setup() {
     // videos.add("../../../data/videos/1950/12_Peter Pan_1953.ogv");
     // videos.add("../../../data/videos/1950/13_Alice in Wonderland_1951.ogv");
     // videos.add("../../../data/videos/1960/14_101 Dalmatians_1961.ogv");
-    video = new Videos(this, videos);
+    video = new Videos(this, videos, videosLengths);
     video.play();
     // video.pause();
     // video.setSpeed(0.00000000001);
+
+    // frame = new Frame(this, "../../../data/videos/Film_strip/Film Strip 02_", 146);
+
+    frameL.add("../../../data/videos/Film_strip/Film Strip 02_");
+    frameLengths.add(146);
+    frame = new Videos(this, frameL, frameLengths);
+    frame.play();
 
     println(Serial.list());
     try{
@@ -55,38 +78,20 @@ void setup() {
 void draw() {
     // video.tick();
     video.update();
+    frame.update();
     background(0);
     // ellipse(width/2, height/2, millis()%100, millis()%100);
     noStroke();
     image(video.getPg(), 0, 0);
+    image(frame.getPg(), 0, 0);
 }
 
 void keyPressed() {
     // println("keyCode: "+keyCode);
-    if(keyCode == 37){
-       //Left
-       println("video.changeSpeed(-0.1): "+video.changeSpeed(-0.01));
-    }else if(keyCode == 39){
-        //Right
-        println("video.changeSpeed(0.1): "+video.changeSpeed(0.01));
-    }
-
-    else if(key == '1'){
-        //Right
-        println("video.next(): "+video.next());
-    }else if(key == '2'){
-        //Right
-        println("video.previous(): "+video.previous());
-    }
-
     //Space
-    else if(keyCode == 32){
+    if(keyCode == 32){
         video.tick(+100);
-    }
-
-    //Command
-    else if(keyCode == 157){
-        println("video.togglePlay(): "+video.togglePlay());
+        frame.tick(+100);
     }
 }
 
@@ -114,7 +119,9 @@ void serialEvent(Serial p) {
             if(video != null) {
               video.tick(messageSecondElement);
             }
-            
+            if(frame != null){
+                frame.tick(messageSecondElement);
+            }   
         }
     }
 }
