@@ -7,4 +7,4 @@ _old/*
 **/build-tmp/*
 *.log
 .*/
-data/pngs
+data/pngs/**/*.png
