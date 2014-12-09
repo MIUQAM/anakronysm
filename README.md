@@ -9,7 +9,7 @@ anakronysm :clock1030:
 
 ## Compiler et éxecuter
 
-1. Placer les vidéos dans le dossier [data/videos/](data/videos/)
+1. Placer les PNGs de vidéos dans le dossier [data/pngs/](data/pngs/)
 
 ## Colaborating
 Afin d'utiliser le repository, vous pouvez utiliser [Github for Windows](https://windows.github.com/) ou [Github for Mac](https://mac.github.com/)
