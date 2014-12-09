@@ -18,6 +18,10 @@ Videos frame;
 ArrayList<String> frameL = new ArrayList<String>();
 ArrayList<Integer> frameLengths = new ArrayList<Integer>();
 
+Videos intro;
+ArrayList<String> introL = new ArrayList<String>();
+ArrayList<Integer> introLengths = new ArrayList<Integer>();
+
 /* ========= ARDUINO ============ */
 String portName = "/dev/tty.usbmodem1411";
 Serial serial;
@@ -25,9 +29,14 @@ String messageFirstElement = "";
 int messageSecondElement = 0;
 float manivelleValue = 0;
 /* ============================== */
+
+boolean screensaving = false;
+TimeoutP5 timeoutScreenSaving;
+
+int tickCount = 0;
  
 void setup() {
-    size(960, 540, OPENGL);
+    size(853, 480, OPENGL);
     frameRate(30);
     // video = new Video(this, "../../../data/videos/Through_The_Mirror.ogv");
 
@@ -68,6 +77,11 @@ void setup() {
     frame = new Videos(this, frameL, frameLengths);
     frame.play();
 
+    introL.add("../../../data/pngs/Intro_v2/Intro_v2_");
+    introLengths.add(224);
+    intro = new Videos(this, introL, introLengths);
+    intro.play();
+
     println(Serial.list());
     try{
         serial = new Serial(this, portName, 57600);
@@ -75,17 +89,51 @@ void setup() {
     }catch (Exception e) {
         println("Couldn't connect to Arduino");
     }
+
+    this.timeoutScreenSaving = new TimeoutP5(10000, false);
+
 }
 
 void draw() {
+
+    checkScreenSaver();
+
     // video.tick();
-    video.update();
-    frame.update();
+    if(screensaving){
+        intro.update();
+        intro.setSpeed(1);
+    }else{
+        video.update();
+        frame.update();
+    }
+    // intro.update();
     background(0);
     // ellipse(width/2, height/2, millis()%100, millis()%100);
     noStroke();
-    image(video.getPg(), 0, 0);
-    image(frame.getPg(), 0, 0);
+    if(screensaving){
+        image(intro.getPg(), 0, 0);
+    }else{
+        image(video.getPg(), 0, 0);
+        image(frame.getPg(), 0, 0);
+    }
+}
+
+void checkScreenSaver(){
+    if(screensaving){
+        if (tickCount >= 10 || tickCount <= -10){
+            screensaving = false;
+            this.timeoutScreenSaving.stop();
+        }
+    }else{
+        if(!this.timeoutScreenSaving.isStarted()){
+            this.timeoutScreenSaving.start();
+            screensaving = false;
+        }
+        if(this.timeoutScreenSaving.isFinished()){
+            screensaving = true;
+            tickCount = 0;
+        }
+    }
 }
 
 void keyPressed() {
@@ -94,6 +142,7 @@ void keyPressed() {
     if(keyCode == 32){
         video.tick(-100);
         frame.tick(-100);
+        tickCount+= -100;
     }
 }
 
@@ -123,7 +172,8 @@ void serialEvent(Serial p) {
             }
             if(frame != null){
                 frame.tick(messageSecondElement);
-            }   
+            }
+            tickCount += messageSecondElement;
         }
     }
 }
