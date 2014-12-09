@@ -90,8 +90,8 @@ void keyPressed() {
     // println("keyCode: "+keyCode);
     //Space
     if(keyCode == 32){
-        video.tick(+100);
-        frame.tick(+100);
+        video.tick(-100);
+        frame.tick(-100);
     }
 }
 

@@ -100,6 +100,7 @@ class Videos {
     }
 
     public void update(){
+        // println("this.available: "+this.available);
         //println("frameCount: "+frameCount);
         //println("millis(): "+millis());
         /*if (this.available == false && this.getCurrentVideo().available()) {
@@ -169,9 +170,10 @@ class Videos {
     public float setMidSpeed(){
         float speed = this.tickCount/100.0;
         speed = map(speed, 0.0, 2.0, 0.0, 3.0);
-        speed = pow(speed, 1.25);
+        // speed = pow(speed, 1.25);
         //invert
         speed *= (-1);
+        // println("speed: "+speed);
         if(speed > 2.5){
             speed = 2.5;
         }else if(speed < -2.5){
