@@ -6,8 +6,18 @@
 * Description here
 */
 
+import processing.serial.*;
+
 Videos video;
 ArrayList<String> videos = new ArrayList<String>();
+
+/* ========= ARDUINO ============ */
+String portName = "/dev/tty.usbmodem1411";
+Serial serial;
+String messageFirstElement = "";
+int messageSecondElement = 0;
+float manivelleValue = 0;
+/* ============================== */
 
 void setup() {
     size(960, 540, OPENGL);
@@ -32,6 +42,14 @@ void setup() {
     video.play();
     // video.pause();
     // video.setSpeed(0.00000000001);
+
+    println(Serial.list());
+    try{
+        serial = new Serial(this, portName, 57600);
+        serial.bufferUntil(13);
+    }catch (Exception e) {
+        println("Couldn't connect to Arduino");
+    }
 }
 
 void draw() {
@@ -75,3 +93,28 @@ void keyPressed() {
 // void movieEvent(Movie m) {
 //     println("movieEvent dehors");
 // }
+
+void serialEvent(Serial p) {
+
+    // Lire le message.
+    String chaine = p.readString();
+
+    // Separer les elements du message
+    // selon les espaces:
+    String[] elements = splitTokens(chaine);
+
+    // S'assurer qu'il y a bien deux mots
+    // dans le message et les appliquer aux variables :
+    if ( elements.length == 2 ) {
+        messageFirstElement = elements[0];
+        messageSecondElement = int(elements[1]);
+        // On peut "router" les messages en comparant le premier Ã©lÃ©ment :
+        if ( messageFirstElement.equals("dir") ){
+            //manivelleValue = messageSecondElement;
+            if(video != null) {
+              video.tick(messageSecondElement);
+            }
+            
+        }
+    }
+}

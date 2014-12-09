@@ -37,7 +37,7 @@ class Videos {
         this.pg = createGraphics(width, height, OPENGL);
         this.pg.beginDraw();
         this.pg.endDraw();
-        this.timeout = new TimeoutP5(1000,true);
+        this.timeout = new TimeoutP5(100,true);
         this.timeout.start();
     }
 
@@ -109,7 +109,8 @@ class Videos {
             }
         //}
         if(this.timeout.isFinished()){
-            println("this.setMidSpeed(): "+this.setMidSpeed());
+            // println("this.setMidSpeed(): "+this.setMidSpeed());
+            this.setMidSpeed();
         }
         // if(this.available){
             if(this.getPImage() != null){
@@ -133,6 +134,11 @@ class Videos {
     }
 
     public float setSpeed(float speed){
+        if(speed > 2){
+            speed = 2;
+        }else if(speed < -2){
+            speed = -2;
+        }
         this.speed = speed;
         this.getCurrentVideo().speed(this.speed);
         return this.getSpeed();
@@ -143,7 +149,16 @@ class Videos {
     }
 
     public float setMidSpeed(){
-        float speed = (float)this.tickCount/1000;
+        float speed = this.tickCount/100.0;
+        speed = map(speed, 0.0, 2.0, 0.0, 3.0);
+        //invert
+        speed *= (-1);
+        if(speed > 2.5){
+            speed = 2.5;
+        }else if(speed < -2.5){
+            speed = -2.5;
+        }
+        println("speed: "+speed);
         if(speed == 0){
             this.pause();
         }
@@ -160,6 +175,7 @@ class Videos {
             this.setSpeed(speed);
         }
         this.tickCount = 0;
+        // println("speed: "+speed);
         return this.getSpeed();
     }
 

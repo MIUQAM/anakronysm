@@ -1,4 +1,4 @@
-// Video class thanks to jmcouillard.com
+// Thanks to jmcouillard.com for help
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -59,7 +59,6 @@ class Video {
         loader.setFrame(currentFrame);
 
         if (loader.ready()) {
-            speed = (mouseX - width/2) / 100.0;
             //println("speed: "+speed);
             timehead += speed;
             timehead = timehead % (framesTotal-1);

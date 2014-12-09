@@ -18,7 +18,7 @@ LeapMotion leap;
 P5toMSPBridge bridge = new P5toMSPBridge("127.0.0.1", 5001);
 
 /* ========= ARDUINO ============ */
-String portName = "/dev/tty.usbmodem1451";
+String portName = "/dev/tty.usbmodem1411";
 Serial serial;
 String messageFirstElement = "";
 int messageSecondElement = 0;
