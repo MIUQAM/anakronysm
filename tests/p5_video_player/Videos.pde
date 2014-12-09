@@ -183,7 +183,8 @@ class Videos {
         /*if(speed == 0){
             this.pause();
         }*/
-        else{
+        //else{
+            bridge.send("speed", speed);
             /*if(!this.getPlaying()){
                 this.play();
             }*/
@@ -194,7 +195,7 @@ class Videos {
                 this.direction = -1;
             }
             this.setSpeed(speed);
-        }
+        //}
         this.tickCount = 0;
         // println("speed: "+speed);
         return this.getSpeed();

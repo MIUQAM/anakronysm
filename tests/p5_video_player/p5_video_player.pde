@@ -8,6 +8,8 @@
 
 import processing.serial.*;
 
+P5toMSPBridge bridge = new P5toMSPBridge("127.0.0.1", 12345);
+
 Videos video;
 ArrayList<String> videos = new ArrayList<String>();
 ArrayList<Integer> videosLengths = new ArrayList<Integer>();
@@ -23,7 +25,7 @@ String messageFirstElement = "";
 int messageSecondElement = 0;
 float manivelleValue = 0;
 /* ============================== */
-
+ 
 void setup() {
     size(960, 540, OPENGL);
     frameRate(30);
