@@ -28,44 +28,41 @@ float manivelleValue = 0;
 
 Videos video;
 ArrayList<String> videos = new ArrayList<String>();
+ArrayList<Integer> videosLengths = new ArrayList<Integer>();
 
+Videos cadre;
+ArrayList<String> cadreL = new ArrayList<String>();
+ArrayList<Integer> cadreLengths = new ArrayList<Integer>();
+
+Videos intro;
+ArrayList<String> introL = new ArrayList<String>();
+ArrayList<Integer> introLengths = new ArrayList<Integer>();
+
+boolean screensaving = false;
+TimeoutP5 timeoutScreenSaving;
+
+int tickCount = 0;
 
 
 void setup() {
-  size(800, 600, OPENGL);
+  size(853, 480, OPENGL);
+  frameRate(30);
 
   // Affiche les noms des ports.
   println(Serial.list());
-  serial = new Serial(this, portName, 57600);
-  // Indiquer a l'instance serial de lancer la fonction serialEvent()
-  // lorsque l'octet 13 est recu. L'octet 13 est envoye par
-  // l'Arduino pour indiquer la fin du message
-  serial.bufferUntil(13);
 
+
+  try{
+      serial = new Serial(this, portName, 57600);
+      serial.bufferUntil(13);
+  }catch (Exception e) {
+      println("Couldn't connect to Arduino");
+  }
 
   leap = new LeapMotion(this);
 
 
-  //videos.add("videos/Through_The_Mirror.ogv");
-  videos.add("videos/1920/1_Steamboat_1928.ogv");
-  videos.add("videos/1920/2_Steamboat_1928.ogv");
-  videos.add("videos/1920/3_skeleton dance_1929.ogv");
-  videos.add("videos/1920/4_skeleton dance_1929.ogv");
-  /*videos.add("videos/1920/5_skeleton dance_1929.ogv");
-  videos.add("videos/1920/6_skeleton dance_1929.ogv");
-  videos.add("videos/1930/7_Woos Whoopee_1930.ogv");
-  videos.add("videos/1930/8_Geti a Horse_1930.ogv");
-  videos.add("videos/1930/9_Bosko the Doughboy_1931.ogv");
-  videos.add("videos/1930/10_Red Hot Mamma_1934.ogv");
-  videos.add("videos/1940/11_Pinocchio_1940.ogv");
-  videos.add("videos/1950/12_Peter Pan_1953.ogv");
-  videos.add("videos/1950/13_Alice in Wonderland_1951.ogv");
-  videos.add("videos/1960/14_101 Dalmatians_1961.ogv");*/
-  video = new Videos(this, videos);
-  
-
-
-
+  setupVideos();
 
 }
 
@@ -73,12 +70,31 @@ void setup() {
 void draw() {
 
 
-  updateLeap();
+  try {
+    updateLeap();
+  } catch (Exception e) {
+  }
 
-  video.update();
-  background(0);
-  noStroke();
-  image(video.getMovie(), 0, 0);
+  checkScreenSaver();
+
+    // video.tick();
+    if(screensaving){
+        intro.update();
+        intro.setSpeed(1);
+    }else{
+        video.update();
+        cadre.update();
+    }
+    // intro.update();
+    background(0);
+    // ellipse(width/2, height/2, millis()%100, millis()%100);
+    noStroke();
+    if(screensaving){
+        image(intro.getPg(), 0, 0);
+    }else{
+        image(video.getPg(), 0, 0);
+        image(cadre.getPg(), 0, 0);
+    }
 
   //bridge.send("modul8/ctrl_layer_movie_playDirection", abs(video.speed));
 
@@ -99,6 +115,27 @@ void draw() {
   popStyle();
 }
 
+void setupVideos(){
+  videos.add("pngs/101 Dalmatians/101 Dalmatians- A Gentleman Always Has His Handkerchief Ready");
+  videosLengths.add(1823);
+
+  video = new Videos(this, videos, videosLengths);
+  video.play();
+
+
+  cadreL.add("videos/Film_strip/Film Strip 02_");
+  cadreLengths.add(146);
+  cadre = new Videos(this, cadreL, cadreLengths);
+  cadre.play();
+
+  introL.add("pngs/Intro_v2/Intro_v2_");
+  introLengths.add(224);
+  intro = new Videos(this, introL, introLengths);
+  intro.play();
+
+  this.timeoutScreenSaving = new TimeoutP5(10000, false);
+}
+
 void updateLeap(){
 
   int fps = leap.getFrameRate();
@@ -111,7 +148,6 @@ void updateLeap(){
       bridge.send("x", handPosition.x);
       bridge.send("y", handPosition.y);
       bridge.send("z", handPosition.z);
-
 
       // ========= FINGERS =========
 
@@ -138,6 +174,24 @@ void updateLeap(){
       fm.update(false);
     }*/
   }
+}
+
+void checkScreenSaver(){
+    if(screensaving){
+        if (tickCount >= 10 || tickCount <= -10){
+            screensaving = false;
+            this.timeoutScreenSaving.stop();
+        }
+    }else{
+        if(!this.timeoutScreenSaving.isStarted()){
+            this.timeoutScreenSaving.start();
+            screensaving = false;
+        }
+        if(this.timeoutScreenSaving.isFinished()){
+            screensaving = true;
+            tickCount = 0;
+        }
+    }
 }
 
 // ========= CALLBACKS =========

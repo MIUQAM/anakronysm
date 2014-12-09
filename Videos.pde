@@ -1,5 +1,3 @@
-import processing.video.*;
-
 class Videos {
 
     PGraphics pg;
@@ -8,11 +6,13 @@ class Videos {
     boolean available = false;
     float speed = 1;
     int tickCount = 0;
+
     PApplet stage;
 
     TimeoutP5 timeout;
 
     ArrayList<String> sources;
+    ArrayList<Integer> sourcesLength;
     int currentSourceIndex = 0;
 
     ArrayList<Video> videos;
@@ -22,11 +22,10 @@ class Videos {
     //         -1 == backward
     int direction = 1;
 
-    ArrayList<PImage> videosFrames = new ArrayList<PImage>();
-
-    public Videos (PApplet stage, ArrayList<String> sources){
+    public Videos (PApplet stage, ArrayList<String> sources, ArrayList<Integer> sourcesLength){
         this.videos = new ArrayList<Video>();
         this.sources = sources;
+        this.sourcesLength = sourcesLength;
         this.stage = stage;
         this.setup();
     }
@@ -34,32 +33,13 @@ class Videos {
     private void setup(){
         if(this.videos.size() <= 0){
             for(int i = 0; i < this.sources.size(); i++){
-                this.videos.add(new Video(this.stage, this.sources.get(i)));
-                int z = 0;
-
-                videos.get(i).play();
-
-                while(z < videos.get(i).getMovie().duration()*30){
-                    videos.get(i).getMovie().read();
-                    PImage tempPI = createImage(width, height, RGB);
-                    //tempPI = videos.get(i).getMovie().copy();
-                    tempPI.copy(videos.get(i).getMovie(), 0, 0, width, height, 0, 0, width, height);
-                    //tempPI = new PImage(videos.get(i).getMovie().getImage());
-                    videosFrames.add(tempPI);
-                    println("frame " + z);
-                    z++;
-
-                }
-
-                videos.get(i).jump(0);
-                videos.get(i).pause();
-
+                this.videos.add(new Video(this.stage, this.sources.get(i), this.sourcesLength.get(i)));
             }
         }
         this.pg = createGraphics(width, height, OPENGL);
         this.pg.beginDraw();
         this.pg.endDraw();
-        this.timeout = new TimeoutP5(1000,true);
+        this.timeout = new TimeoutP5(100,true);
         this.timeout.start();
     }
 
@@ -69,15 +49,19 @@ class Videos {
 
     public boolean play(){
         this.getCurrentVideo().play();
+        this.available = true;
         return this.setPlaying(true);
     }
 
-    public boolean pause(){
-        this.getCurrentVideo().pause();
-        return this.setPlaying(false);
-    }
+    /*public boolean pause(){
+        this.setSpeed(0);
+
+        this.available = false;
+        return this.setPlaying(true);
+    }*/
 
     public void stop() {
+        this.available = false;
         this.getCurrentVideo().stop();
     }
 
@@ -90,48 +74,75 @@ class Videos {
         return this.getPlaying();
     }
 
-    public boolean togglePlay(){
+    /*public boolean togglePlay(){
         if(this.getPlaying()){
             return this.pause();
         }else{
             return this.play();
         }
-    }
+    }*/
 
     public PGraphics getPg(){
         return this.pg;
     }
 
-    public Movie getMovie(){
-        return this.getCurrentVideo().getMovie();
+    public PImage getPImage(){
+        if(this.getCurrentVideo().getPImage() != null){
+            return this.getCurrentVideo().getPImage();
+        }
+        else{
+            return new PImage();
+        }
+    }
+
+    public PImage getMovie(){
+        return this.getPImage();
     }
 
     public void update(){
-        if (this.available == false && this.getCurrentVideo().available()) {
+        // println("this.available: "+this.available);
+        //println("frameCount: "+frameCount);
+        //println("millis(): "+millis());
+        /*if (this.available == false && this.getCurrentVideo().available()) {
             this.available = true;
-        }
+        }*/
         if(this.available){
-            // println("reading");
-            this.getCurrentVideo().volume(0);
-            this.getCurrentVideo().read();
-            this.getCurrentVideo().volume(0);
+            /* println("available");
+            // this.getCurrentVideo().read();
             if(this.getCurrentVideo().pastEnd()){
                 this.next();
-            }else if(this.getCurrentVideo().pastStart()){
+                println("next");
+            } else if(this.getCurrentVideo().pastStart()){
                 this.previous();
-            }
+                println("prev");
+            } else {
+            
+                println("else");*/
+                if(this.timeout.isFinished()){
+            // println("this.setMidSpeed(): "+this.setMidSpeed());
+                    this.setMidSpeed();
+                }
+                // if(this.available){
+                if(this.getPImage() != null){
+                    this.getCurrentVideo().update();
+                    this.pg.beginDraw();
+                        this.pg.clear();
+                        this.pg.image(this.getPImage(), 0, 0, width, height);
+                    this.pg.endDraw();
+                }
+
+
+            // }
+
+        } else {
+
+             println("!available");
         }
-        if(this.timeout.isFinished()){
-            this.setMidSpeed();
-            //println("this.setMidSpeed(): "+this.setMidSpeed());
-        }
-        this.pg.beginDraw();
-            this.pg.clear();
-            this.pg.image(this.getCurrentVideo().getMovie(), 0, 0, width, height);
-        this.pg.endDraw();
+        
+        // }
     }
 
-    public float backward(){
+    /*public float backward(){
         this.setSpeed((-1.0) * abs(this.speed));
         return this.getSpeed();
     }
@@ -139,9 +150,14 @@ class Videos {
     public float forward(){
         this.setSpeed(abs(this.speed));
         return this.getSpeed();
-    }
+    }*/
 
     public float setSpeed(float speed){
+        if(speed > 2){
+            speed = 2;
+        }else if(speed < -2){
+            speed = -2;
+        }
         this.speed = speed;
         this.getCurrentVideo().speed(this.speed);
         return this.getSpeed();
@@ -152,14 +168,26 @@ class Videos {
     }
 
     public float setMidSpeed(){
-        float speed = (float)this.tickCount/100;
-        if(speed == 0){
-            this.pause();
+        float speed = this.tickCount/100.0;
+        speed = map(speed, 0.0, 2.0, 0.0, 3.0);
+        // speed = pow(speed, 1.25);
+        //invert
+        speed *= (-1);
+        // println("speed: "+speed);
+        if(speed > 2.5){
+            speed = 2.5;
+        }else if(speed < -2.5){
+            speed = -2.5;
         }
-        else{
-            if(!this.getPlaying()){
+        // println("speed: "+speed);
+        /*if(speed == 0){
+            this.pause();
+        }*/
+        //else{
+            bridge.send("speed", speed);
+            /*if(!this.getPlaying()){
                 this.play();
-            }
+            }*/
             if(tickCount > 0){
                 this.direction = 1;
             }
@@ -167,8 +195,9 @@ class Videos {
                 this.direction = -1;
             }
             this.setSpeed(speed);
-        }
+        //}
         this.tickCount = 0;
+        // println("speed: "+speed);
         return this.getSpeed();
     }
 
@@ -181,13 +210,14 @@ class Videos {
         return this.time;
     }
 
-    public float setTime(float time){
+    /*public float setTime(float time){
         this.time = time;
         this.getCurrentVideo().jump(time);
         this.play();
         this.pause();
+        println("setTime");
         return this.getTime();
-    }
+    }*/
 
     public float tick(int direction){
         // this.setTime(this.getTime() + 1.0/frameRate);
