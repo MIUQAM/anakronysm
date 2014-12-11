@@ -49,7 +49,9 @@ int tickCount = 0;
 PImage brush;
 
 PGraphics pass1;
+PGraphics pass1Cadre;
 PGraphics pass2;
+PGraphics pass3;
 
 boolean pass2Visible = false;
 int pass2Alpha = 0;
@@ -99,9 +101,17 @@ void setup() {
   pass1.beginDraw();
   pass1.endDraw();
 
+  pass1Cadre = createGraphics(width, height, OPENGL);
+  pass1Cadre.beginDraw();
+  pass1Cadre.endDraw();
+
   pass2 = createGraphics(width, height, OPENGL);
   pass2.beginDraw();
   pass2.endDraw();
+
+  pass3 = createGraphics(width, height, OPENGL);
+  pass3.beginDraw();
+  pass3.endDraw();
 
   for (int i = 0; i < 5; i++) {
     fingerMaskArray.add(new FingerMask());
@@ -146,17 +156,6 @@ void draw() {
 
   checkScreenSaver();
 
-    // video.tick();
-    if(screensaving){
-        intro.update();
-        intro.setSpeed(1);
-    }else{
-      video.update();
-      cadre.update();
-      updatePass1();
-      updatePass2(shadersManager.getCurrentShader());
-
-    }
     // intro.update();
     background(0);
 
@@ -168,11 +167,15 @@ void draw() {
         video.update();
         cadre.update();
         updatePass1();
+        updatePass1Cadre();
         updatePass2(shadersManager.getCurrentShader());
+        updatePass3(shadersManager.getCurrentShader());
 
         image(pass1, 0, 0);
+        image(pass1Cadre, 0, 0);
         //image(photo, 0, 0);
         image(pass2, 0, 0);
+        image(pass3, 0, 0);
         //image(video.getPg(), 0, 0);
         //image(cadre.getPg(), 0, 0);
 
@@ -270,14 +273,29 @@ void updatePass1() {
   pass1.beginDraw();
   pass1.clear();
 
+  blackAndWhite.set("a", 1.0);
   pass1.shader(blackAndWhite);
 
   pass1.image(video.getCurrentVideo().getPImage(), 0, 0, width, height);
-  pass1.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
 
   pass1.resetShader();
 
   pass1.endDraw();
+}
+
+void updatePass1Cadre() {
+  pass1Cadre.beginDraw();
+  pass1Cadre.clear();
+
+  blackAndWhite.set("a", cadre.getOpacity());
+  println("cadre.getOpacity(): "+cadre.getOpacity());
+  pass1Cadre.shader(blackAndWhite);
+
+  pass1Cadre.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
+
+  pass1Cadre.resetShader();
+
+  pass1Cadre.endDraw();
 }
 
 void updatePass2(String fx) {
@@ -300,7 +318,6 @@ void updatePass2(String fx) {
     effect1.set("z", norm(handPos.z, 0, 200));
     pass2.shader(effect1);
     pass2.image(video.getCurrentVideo().getPImage(), 0, 0, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
   }
 
   else if(fx.equals("effect2")){
@@ -317,7 +334,6 @@ void updatePass2(String fx) {
     effect2.set("blue", 0.0);
     pass2.shader(effect2);
     pass2.image(video.getCurrentVideo().getPImage(), x*z*8, y*z*8, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*8, y*z*8, width, height);
     pass2.resetShader();
 
     effect2.set("a", norm(pass2Alpha, 0, 255));
@@ -328,7 +344,6 @@ void updatePass2(String fx) {
     effect2.set("blue", 0.0);
     pass2.shader(effect2);
     pass2.image(video.getCurrentVideo().getPImage(), x*z*6, y*z*6, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*6, y*z*6, width, height);
     pass2.resetShader();
 
     effect2.set("a", norm(pass2Alpha, 0, 255));
@@ -339,7 +354,6 @@ void updatePass2(String fx) {
     effect2.set("blue", 1.0);
     pass2.shader(effect2);
     pass2.image(video.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
 
   }
 
@@ -357,7 +371,6 @@ void updatePass2(String fx) {
     effect3.set("blue", 0.0);
     pass2.shader(effect3);
     pass2.image(video.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
     pass2.resetShader();
 
     effect3.set("a", norm(pass2Alpha, 0, 255));
@@ -368,7 +381,6 @@ void updatePass2(String fx) {
     effect3.set("blue", 0.0);
     pass2.shader(effect3);
     pass2.image(video.getCurrentVideo().getPImage(), x*z*3, y*z*3, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*3, y*z*3, width, height);
     pass2.resetShader();
 
     effect3.set("a", norm(pass2Alpha, 0, 255));
@@ -379,7 +391,6 @@ void updatePass2(String fx) {
     effect3.set("blue", 1.0);
     pass2.shader(effect3);
     pass2.image(video.getCurrentVideo().getPImage(), x*z*2, y*z*2, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*2, y*z*2, width, height);
 
   }
 
@@ -397,7 +408,6 @@ void updatePass2(String fx) {
     effect4.set("blue", 0.0);
     pass2.shader(effect4);
     pass2.image(video.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
     pass2.resetShader();
 
     effect4.set("a", norm(pass2Alpha, 0, 255));
@@ -408,7 +418,6 @@ void updatePass2(String fx) {
     effect4.set("blue", 0.0);
     pass2.shader(effect4);
     pass2.image(video.getCurrentVideo().getPImage(), x*z*3, y*z*3, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*3, y*z*3, width, height);
     pass2.resetShader();
 
     effect4.set("a", norm(pass2Alpha, 0, 255));
@@ -419,7 +428,6 @@ void updatePass2(String fx) {
     effect4.set("blue", 1.0);
     pass2.shader(effect4);
     pass2.image(video.getCurrentVideo().getPImage(), x*z*2, y*z*2, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*2, y*z*2, width, height);
 
   }
 
@@ -430,7 +438,6 @@ void updatePass2(String fx) {
     glow.set("intensity", z);
     pass2.shader(glow);
     pass2.image(video.getCurrentVideo().getPImage(), 0, 0, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
   }
 
   else if(fx.equals("glow2")){
@@ -440,7 +447,6 @@ void updatePass2(String fx) {
     glow2.set("intensity", z);
     pass2.shader(glow2);
     pass2.image(video.getCurrentVideo().getPImage(), 0, 0, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
   }
 
   else if(fx.equals("colorizeCircle")){
@@ -450,12 +456,170 @@ void updatePass2(String fx) {
     }
     pass2.shader(colorizeCircle);
     pass2.image(video.getCurrentVideo().getPImage(), 0, 0, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
   }
 
   pass2.resetShader();
 
   pass2.endDraw();
+}
+
+void updatePass3(String fx) {
+
+  println("handPos.z: "+handPos.z);
+
+  pass3.beginDraw();
+
+  if(fx.equals("effect1")){
+    pass3.clear();
+    effect1.set("a", cadre.getOpacity());
+    effect1.set("x", norm(handPos.x, 0, width));
+    effect1.set("y", norm(handPos.y, 0, height));
+    effect1.set("z", norm(handPos.z, 0, 200));
+    pass3.shader(effect1);
+    pass3.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
+  }
+
+  else if(fx.equals("effect2")){
+    pass3.clear();
+    float x = map(handPos.x, 0, width, -1.0, 1.0);
+    float y = map(handPos.y, 0, height, -1.0, 1.0);
+    float z = map(handPos.z, 0, 100, 0, 20);
+    
+    effect2.set("a", cadre.getOpacity());
+    effect2.set("x", abs(x) + 0.25);
+    effect2.set("y", abs(y) + 0.25);
+    effect2.set("red", 1.0);
+    effect2.set("green", 0.0);
+    effect2.set("blue", 0.0);
+    pass3.shader(effect2);
+    pass3.image(cadre.getCurrentVideo().getPImage(), x*z*8, y*z*8, width, height);
+    pass3.resetShader();
+
+    effect2.set("a", cadre.getOpacity());
+    effect2.set("x", abs(x) + 0.25);
+    effect2.set("y", abs(y) + 0.25);
+    effect2.set("red", 0.0);
+    effect2.set("green", 1.0);
+    effect2.set("blue", 0.0);
+    pass3.shader(effect2);
+    pass3.image(cadre.getCurrentVideo().getPImage(), x*z*6, y*z*6, width, height);
+    pass3.resetShader();
+
+    effect2.set("a", cadre.getOpacity());
+    effect2.set("x", abs(x) + 0.25);
+    effect2.set("y", abs(y) + 0.25);
+    effect2.set("red", 0.0);
+    effect2.set("green", 0.0);
+    effect2.set("blue", 1.0);
+    pass3.shader(effect2);
+    pass3.image(cadre.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
+
+  }
+
+  else if(fx.equals("effect3")){
+    pass3.clear();
+    float x = map(handPos.x, 0, width, -1.0, 1.0);
+    float y = map(handPos.y, 0, height, -1.0, 1.0);
+    float z = map(handPos.z, 0, 100, 0, 20);
+    
+    effect3.set("a", cadre.getOpacity());
+    effect3.set("x", abs(x) + 0.1);
+    effect3.set("y", abs(y) + 0.1);
+    effect3.set("red", 1.0);
+    effect3.set("green", 0.0);
+    effect3.set("blue", 0.0);
+    pass3.shader(effect3);
+    pass3.image(cadre.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
+    pass3.resetShader();
+
+    effect3.set("a", cadre.getOpacity());
+    effect3.set("x", abs(x) + 0.1);
+    effect3.set("y", abs(y) + 0.1);
+    effect3.set("red", 0.0);
+    effect3.set("green", 1.0);
+    effect3.set("blue", 0.0);
+    pass3.shader(effect3);
+    pass3.image(cadre.getCurrentVideo().getPImage(), x*z*3, y*z*3, width, height);
+    pass3.resetShader();
+
+    effect3.set("a", cadre.getOpacity());
+    effect3.set("x", abs(x) + 0.1);
+    effect3.set("y", abs(y) + 0.1);
+    effect3.set("red", 0.0);
+    effect3.set("green", 0.0);
+    effect3.set("blue", 1.0);
+    pass3.shader(effect3);
+    pass3.image(cadre.getCurrentVideo().getPImage(), x*z*2, y*z*2, width, height);
+
+  }
+
+  else if(fx.equals("effect4")){
+    pass3.clear();
+    float x = map(handPos.x, 0, width, -1.0, 1.0);
+    float y = map(handPos.y, 0, height, -1.0, 1.0);
+    float z = map(handPos.z, 0, 100, 0, 20);
+    
+    effect4.set("a", cadre.getOpacity());
+    effect4.set("x", abs(x) + 0.1);
+    effect4.set("y", abs(y) + 0.1);
+    effect4.set("red", 1.0);
+    effect4.set("green", 0.0);
+    effect4.set("blue", 0.0);
+    pass3.shader(effect4);
+    pass3.image(cadre.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
+    pass3.resetShader();
+
+    effect4.set("a", cadre.getOpacity());
+    effect4.set("x", abs(x) + 0.1);
+    effect4.set("y", abs(y) + 0.1);
+    effect4.set("red", 0.0);
+    effect4.set("green", 1.0);
+    effect4.set("blue", 0.0);
+    pass3.shader(effect4);
+    pass3.image(cadre.getCurrentVideo().getPImage(), x*z*3, y*z*3, width, height);
+    pass3.resetShader();
+
+    effect4.set("a", cadre.getOpacity());
+    effect4.set("x", abs(x) + 0.1);
+    effect4.set("y", abs(y) + 0.1);
+    effect4.set("red", 0.0);
+    effect4.set("green", 0.0);
+    effect4.set("blue", 1.0);
+    pass3.shader(effect4);
+    pass3.image(cadre.getCurrentVideo().getPImage(), x*z*2, y*z*2, width, height);
+
+  }
+
+  else if(fx.equals("glow")){
+    pass3.clear();
+    float z = map(handPos.z, 0, 100, 0.85, 1.0);
+    glow.set("a", cadre.getOpacity());
+    glow.set("intensity", z);
+    pass3.shader(glow);
+    pass3.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
+  }
+
+  else if(fx.equals("glow2")){
+    pass3.clear();
+    float z = map(handPos.z, 0, 100, 0.001, 0.03);
+    glow2.set("a", cadre.getOpacity());
+    glow2.set("intensity", z);
+    pass3.shader(glow2);
+    pass3.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
+  }
+
+  else if(fx.equals("colorizeCircle")){
+    pass3.clear();
+    for (int i = 0; i < 5; i++) {
+      colorizeCircle.set("maskTexture_f"+i, fingerMaskArray.get(i).draw());
+    }
+    pass3.shader(colorizeCircle);
+    pass3.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
+  }
+
+  pass3.resetShader();
+
+  pass3.endDraw();
 }
 
 void checkScreenSaver(){
