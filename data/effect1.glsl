@@ -33,9 +33,14 @@ vec4 Effect1( in vec4 color )
    		outputColor.b = clamp(color.r * 0.299 + color.g * 0.587 + color.b * 0.114, 0.0, 1.0);
 	}
    
-   	outputColor.a = a;
+  if(color.a == 0.0){
+    outputColor.a = 0.0;
+  } else {
+    outputColor.a = a;
+  }
+ 	
 
-    return outputColor;
+  return outputColor;
 }
 
 void main (void){

@@ -71,7 +71,7 @@ PShader colorizeCircle;
 
 
 void setup() {
-  size(853, 480, OPENGL);
+  size(854, 480, OPENGL);
   frameRate(30);
 
   // Affiche les noms des ports.
@@ -181,7 +181,7 @@ void draw() {
 }
 
 void setupVideos(){
-  videos.add("pngs/101 Dalmatians/101 Dalmatians- A Gentleman Always Has His Handkerchief Ready");
+  videos.add("Main/101 Dalmatians/101 Dalmatians- A Gentleman Always Has His Handkerchief Ready");
   videosLengths.add(1823);
 
   video = new Videos(this, videos, videosLengths);
@@ -263,14 +263,14 @@ void updatePass1() {
 
 void updatePass2(String fx) {
 
-  println("fx: "+fx);
+  println("handPos.z: "+handPos.z);
 
   pass2.beginDraw();
   
   if(pass2Visible && pass2Alpha < 255){
-    pass2Alpha+=2;
+    pass2Alpha+=5;
   } else if(!pass2Visible && pass2Alpha > 0){
-    pass2Alpha-=2;
+    pass2Alpha-=5;
   }
 
   if(fx.equals("effect1")){
@@ -291,36 +291,36 @@ void updatePass2(String fx) {
     float z = map(handPos.z, 0, 100, 0, 20);
     
     effect2.set("a", norm(pass2Alpha, 0, 255));
-    effect2.set("x", abs(x) + 0.1);
-    effect2.set("y", abs(y) + 0.1);
+    effect2.set("x", abs(x) + 0.25);
+    effect2.set("y", abs(y) + 0.25);
     effect2.set("red", 1.0);
     effect2.set("green", 0.0);
     effect2.set("blue", 0.0);
     pass2.shader(effect2);
-    pass2.image(video.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
+    pass2.image(video.getCurrentVideo().getPImage(), x*z*8, y*z*8, width, height);
+    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*8, y*z*8, width, height);
     pass2.resetShader();
 
     effect2.set("a", norm(pass2Alpha, 0, 255));
-    effect2.set("x", abs(x) + 0.1);
-    effect2.set("y", abs(y) + 0.1);
+    effect2.set("x", abs(x) + 0.25);
+    effect2.set("y", abs(y) + 0.25);
     effect2.set("red", 0.0);
     effect2.set("green", 1.0);
     effect2.set("blue", 0.0);
     pass2.shader(effect2);
-    pass2.image(video.getCurrentVideo().getPImage(), x*z*3, y*z*3, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*3, y*z*3, width, height);
+    pass2.image(video.getCurrentVideo().getPImage(), x*z*6, y*z*6, width, height);
+    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*6, y*z*6, width, height);
     pass2.resetShader();
 
     effect2.set("a", norm(pass2Alpha, 0, 255));
-    effect2.set("x", abs(x) + 0.1);
-    effect2.set("y", abs(y) + 0.1);
+    effect2.set("x", abs(x) + 0.25);
+    effect2.set("y", abs(y) + 0.25);
     effect2.set("red", 0.0);
     effect2.set("green", 0.0);
     effect2.set("blue", 1.0);
     pass2.shader(effect2);
-    pass2.image(video.getCurrentVideo().getPImage(), x*z*2, y*z*2, width, height);
-    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*2, y*z*2, width, height);
+    pass2.image(video.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
+    pass2.image(cadre.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
 
   }
 

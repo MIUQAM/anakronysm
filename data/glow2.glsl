@@ -23,7 +23,15 @@ void main(void) {
     }
   }
 
-  gl_FragColor = sum*sum+ vec4(texture2D( texture, vertTexCoord.st).rgb, a);
+  float alpha;
+
+  if(sum.a == 0.0){
+    alpha = 0.0;
+  } else {
+    alpha = a;
+  }
+
+  gl_FragColor = sum*sum+ vec4(texture2D( texture, vertTexCoord.st).rgb, alpha);
 }
 /*#define PROCESSING_TEXTURE_SHADER
 

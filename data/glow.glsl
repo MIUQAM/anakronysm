@@ -15,5 +15,10 @@ void main()
   vec3 o = T.rgb;
   for (float i=0.;i<100.;i++) 
     p.z += pow(max(0.,.5-length(T.rgb)),1.)*exp(-i*.08);
-  gl_FragColor=vec4(o*o+p.z,a);
+
+  if(T.a == 0.0){
+  	gl_FragColor=vec4(o*o+p.z,0.0);
+  } else {
+  	gl_FragColor=vec4(o*o+p.z,a);
+  }
 }
