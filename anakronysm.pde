@@ -627,17 +627,28 @@ void checkScreenSaver(){
         if (tickCount >= 10 || tickCount <= -10){
             screensaving = false;
             this.timeoutScreenSaving.stop();
+            // println("stopping timeout");
         }
     }else{
-        if(!this.timeoutScreenSaving.isStarted()){
-            this.timeoutScreenSaving.start();
-            screensaving = false;
+        //Si pas d'entrée
+        if (tickCount < 10 && tickCount > -10){
+            // println("pas d'entree.");
+            if(!this.timeoutScreenSaving.isStarted()){
+              this.timeoutScreenSaving.start();
+              // println("starting timeout");
+              screensaving = false;
+            }
+            if(this.timeoutScreenSaving.isFinished()){
+                screensaving = true;
+            }
         }
-        if(this.timeoutScreenSaving.isFinished()){
-            screensaving = true;
-            tickCount = 0;
+        //Si entrée
+        else{
+          this.timeoutScreenSaving.start();
+          // println("resetting timeout");
         }
     }
+    tickCount = 0;
 }
 
 // ========= CALLBACKS =========
