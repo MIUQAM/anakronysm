@@ -14,13 +14,11 @@ import processing.serial.*;
 
 boolean debug = true;
 
-PImage photo;
-
 LeapMotion leap;
 P5toMSPBridge bridge = new P5toMSPBridge("127.0.0.1", 5001);
 
 /* ========= ARDUINO ============ */
-String portName = "/dev/tty.usbmodem1411";
+String portName = "/dev/tty.usbmodem1451";
 Serial serial;
 String messageFirstElement = "";
 int messageSecondElement = 0;
@@ -96,7 +94,7 @@ void setup() {
 
   setupVideos();
 
-  pass1 = createGraphics(width, height, OPENGL);
+  pass1 = createGraphics(654, height, OPENGL);
   pass1.beginDraw();
   pass1.endDraw();
 
@@ -104,7 +102,7 @@ void setup() {
   pass1Cadre.beginDraw();
   pass1Cadre.endDraw();
 
-  pass2 = createGraphics(width, height, OPENGL);
+  pass2 = createGraphics(654, height, OPENGL);
   pass2.beginDraw();
   pass2.endDraw();
 
@@ -139,8 +137,6 @@ void setup() {
 
   brush = loadImage("brush.png");
 
-  photo = loadImage("pngs/Intro_v2/Intro_v2_0080.png");
-
 }
 
 
@@ -169,10 +165,10 @@ void draw() {
         updatePass2(shadersManager.getCurrentShader());
         updatePass3(shadersManager.getCurrentShader());
 
-        image(pass1, 0, 0);
+        image(pass1, 100, 0);
         image(pass1Cadre, 0, 0);
         //image(photo, 0, 0);
-        image(pass2, 0, 0);
+        image(pass2, 100, 0, 654, height);
         image(pass3, 0, 0);
         //image(video.getPg(), 0, 0);
         //image(cadre.getPg(), 0, 0);
@@ -199,8 +195,8 @@ void draw() {
 }
 
 void setupVideos(){
-  videos.add("pngs/101 Dalmatians/101 Dalmatians- A Gentleman Always Has His Handkerchief Ready");
-  videosLengths.add(1823);
+  videos.add("Main/Main");
+  videosLengths.add(44510);
 
   video = new Videos(this, videos, videosLengths);
   video.play();
