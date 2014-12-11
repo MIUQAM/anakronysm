@@ -70,6 +70,10 @@ PShader glow2;
 PShader colorizeCircle;
 
 
+float speed = 0;
+float glitchesOpacity;
+
+
 void setup() {
   size(854, 480, OPENGL);
   frameRate(30);
@@ -140,6 +144,17 @@ void draw() {
 
   checkScreenSaver();
 
+    // video.tick();
+    if(screensaving){
+        intro.update();
+        intro.setSpeed(1);
+    }else{
+      video.update();
+      cadre.update();
+      updatePass1();
+      updatePass2(shadersManager.getCurrentShader());
+
+    }
     // intro.update();
     background(0);
 
@@ -192,6 +207,7 @@ void setupVideos(){
   cadreLengths.add(146);
   cadre = new Videos(this, cadreL, cadreLengths);
   cadre.play();
+  cadre.opacityAffected = true;
 
   introL.add("pngs/Intro_v2/Intro_v2_");
   introLengths.add(224);
