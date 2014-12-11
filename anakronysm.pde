@@ -195,11 +195,6 @@ void draw() {
 
 }
 
-float getOpacity(){
-  speed = video.getSpeed();
-  return map(abs(speed),0,2,0,255);
-}
-
 void setupVideos(){
   videos.add("pngs/101 Dalmatians/101 Dalmatians- A Gentleman Always Has His Handkerchief Ready");
   videosLengths.add(1823);
@@ -212,6 +207,7 @@ void setupVideos(){
   cadreLengths.add(146);
   cadre = new Videos(this, cadreL, cadreLengths);
   cadre.play();
+  cadre.opacityAffected = true;
 
   introL.add("pngs/Intro_v2/Intro_v2_");
   introLengths.add(224);
@@ -283,7 +279,7 @@ void updatePass1() {
 
 void updatePass2(String fx) {
 
-  println("fx: "+fx);
+  // println("fx: "+fx);
 
   pass2.beginDraw();
   

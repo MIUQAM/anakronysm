@@ -17,6 +17,8 @@ class Videos {
 
     ArrayList<Video> videos;
 
+    boolean opacityAffected = false;
+
     //direction
     //          1 == forward
     //         -1 == backward
@@ -90,9 +92,13 @@ class Videos {
         if(this.getCurrentVideo().getPImage() != null){
             return this.getCurrentVideo().getPImage();
         }
-        else{
-            return new PImage();
-        }
+        return new PImage();
+    }
+
+    int getOpacity(){
+        if(opacityAffected)
+            return int(map(abs(this.getSpeed()),0.0,2.0,1.0,0.0));
+        return 255;
     }
 
     public PImage getMovie(){
