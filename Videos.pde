@@ -173,6 +173,10 @@ class Videos {
         return this.speed;
     }
 
+    public void setFrame(float frame){
+        this.getCurrentVideo().setFrame(frame);
+    }
+
     public float setMidSpeed(){
         float speed = this.tickCount/100.0;
         speed = map(speed, 0.0, 2.0, 0.0, 3.0);
