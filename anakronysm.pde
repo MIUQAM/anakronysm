@@ -12,7 +12,7 @@ import de.voidplus.leapmotion.*;
 import processing.opengl.*;
 import processing.serial.*;
 
-boolean fullscreen = false;
+boolean fullscreen = true;
 
 boolean debug = true;
 Debugger debugger = new Debugger();
@@ -83,6 +83,8 @@ void setup() {
 
   // Affiche les noms des ports.
   println(Serial.list());
+
+  noCursor();
 
 
   try{

@@ -1,4 +1,4 @@
-anakronysm :clock1030:
+![Anakronysm](images/logo.png)
 ==========
 
 ## Conventions
