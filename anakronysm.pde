@@ -13,6 +13,7 @@ import processing.opengl.*;
 import processing.serial.*;
 
 boolean debug = true;
+Debugger debugger = new Debugger();
 
 LeapMotion leap;
 P5toMSPBridge bridge = new P5toMSPBridge("127.0.0.1", 5001);
@@ -190,6 +191,7 @@ void draw() {
       int fps = Math.round(frameRate);
       frame.setTitle(fps + "fps");
     }
+    // debugger.draw();
   }
 
 }
@@ -200,6 +202,7 @@ void setupVideos(){
 
   video = new Videos(this, videos, videosLengths);
   video.play();
+  video.setFrame(random(0, 1823));
 
 
   cadreL.add("videos/Film_strip/Film Strip 02_");
@@ -281,7 +284,7 @@ void updatePass1Cadre() {
   pass1Cadre.clear();
 
   blackAndWhite.set("a", cadre.getOpacity());
-  println("cadre.getOpacity(): "+cadre.getOpacity());
+  // println("cadre.getOpacity(): "+cadre.getOpacity());
   pass1Cadre.shader(blackAndWhite);
 
   pass1Cadre.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
@@ -293,7 +296,7 @@ void updatePass1Cadre() {
 
 void updatePass2(String fx) {
 
-  println("handPos.z: "+handPos.z);
+  // println("handPos.z: "+handPos.z);
 
   pass2.beginDraw();
   
@@ -458,7 +461,7 @@ void updatePass2(String fx) {
 
 void updatePass3(String fx) {
 
-  println("handPos.z: "+handPos.z);
+  // println("handPos.z: "+handPos.z);
 
   pass3.beginDraw();
 
