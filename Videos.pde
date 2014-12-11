@@ -98,7 +98,7 @@ class Videos {
     int getOpacity(){
         if(opacityAffected)
             return int(map(abs(this.getSpeed()),0.0,2.0,1.0,0.0));
-        return 255;
+        return 1;
     }
 
     public PImage getMovie(){
