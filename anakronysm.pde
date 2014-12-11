@@ -13,6 +13,7 @@ import processing.opengl.*;
 import processing.serial.*;
 
 boolean debug = true;
+Debugger debugger = new Debugger();
 
 PImage photo;
 
@@ -131,6 +132,7 @@ void setup() {
 
   photo = loadImage("pngs/Intro_v2/Intro_v2_0080.png");
 
+  // debugger.add("Test", "test");
 }
 
 
@@ -191,12 +193,13 @@ void draw() {
       int fps = Math.round(frameRate);
       frame.setTitle(fps + "fps");
     }
+    debugger.draw();
   }
 
 }
 
 void setupVideos(){
-  videos.add("Main/101 Dalmatians/101 Dalmatians- A Gentleman Always Has His Handkerchief Ready");
+  videos.add("pngs/101 Dalmatians/101 Dalmatians- A Gentleman Always Has His Handkerchief Ready");
   videosLengths.add(1823);
 
   video = new Videos(this, videos, videosLengths);
