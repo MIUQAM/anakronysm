@@ -12,6 +12,8 @@ import de.voidplus.leapmotion.*;
 import processing.opengl.*;
 import processing.serial.*;
 
+boolean fullscreen = false;
+
 boolean debug = true;
 Debugger debugger = new Debugger();
 
@@ -19,7 +21,7 @@ LeapMotion leap;
 P5toMSPBridge bridge = new P5toMSPBridge("127.0.0.1", 5001);
 
 /* ========= ARDUINO ============ */
-String portName = "/dev/tty.usbmodem1451";
+String portName = "/dev/tty.usbmodem1411";
 Serial serial;
 String messageFirstElement = "";
 int messageSecondElement = 0;
@@ -95,7 +97,7 @@ void setup() {
 
   setupVideos();
 
-  pass1 = createGraphics(654, height, OPENGL);
+  pass1 = createGraphics(width, height, OPENGL);
   pass1.beginDraw();
   pass1.endDraw();
 
@@ -103,7 +105,7 @@ void setup() {
   pass1Cadre.beginDraw();
   pass1Cadre.endDraw();
 
-  pass2 = createGraphics(654, height, OPENGL);
+  pass2 = createGraphics(width, height, OPENGL);
   pass2.beginDraw();
   pass2.endDraw();
 
@@ -167,10 +169,10 @@ void draw() {
         updatePass2(shadersManager.getCurrentShader());
         updatePass3(shadersManager.getCurrentShader());
 
-        image(pass1, 100, 0);
+        image(pass1, 0, 0);
         image(pass1Cadre, 0, 0);
         //image(photo, 0, 0);
-        image(pass2, 100, 0);
+        image(pass2, 0, 0);
         image(pass3, 0, 0);
         //image(video.getPg(), 0, 0);
         //image(cadre.getPg(), 0, 0);
@@ -221,6 +223,7 @@ void setupVideos(){
   intro.play();
 
   this.timeoutScreenSaving = new TimeoutP5(10000, false);
+  this.timeoutScreenSaving.start();
 }
 
 
@@ -624,19 +627,20 @@ void updatePass3(String fx) {
 
 void checkScreenSaver(){
     if(screensaving){
-        if (tickCount >= 10 || tickCount <= -10){
+        if (tickCount >= 2 || tickCount <= -2){
             screensaving = false;
             this.timeoutScreenSaving.stop();
-            // println("stopping timeout");
+            println("stopping timeout");
         }
     }else{
         //Si pas d'entrée
-        if (tickCount < 10 && tickCount > -10){
-            // println("pas d'entree.");
+        if (tickCount < 2 && tickCount > -2){
+            println("pas d'entree.");
             if(!this.timeoutScreenSaving.isStarted()){
-              this.timeoutScreenSaving.start();
-              // println("starting timeout");
               screensaving = false;
+              this.timeoutScreenSaving.reset();
+              this.timeoutScreenSaving.start();
+              println("starting timeout");
             }
             if(this.timeoutScreenSaving.isFinished()){
                 screensaving = true;
@@ -644,8 +648,9 @@ void checkScreenSaver(){
         }
         //Si entrée
         else{
-          this.timeoutScreenSaving.start();
-          // println("resetting timeout");
+          screensaving = false;
+          this.timeoutScreenSaving.reset();
+          println("resetting timeout");
         }
     }
     tickCount = 0;
@@ -713,4 +718,9 @@ void serialEvent(Serial p) {
             tickCount += messageSecondElement;
         }
     }
+}
+
+
+boolean sketchFullScreen() {
+  return fullscreen;
 }
