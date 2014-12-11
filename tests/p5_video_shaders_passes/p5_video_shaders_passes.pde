@@ -29,6 +29,10 @@ PShader glow;
 PShader glow2;
 PShader colorizeCircle;
 
+PImage photo;
+
+    
+
 void setup() {
   size(800, 600, OPENGL);
   frameRate(60);
@@ -72,6 +76,8 @@ void setup() {
   shadersManager.switchShader();
 
   brush = loadImage("brush.png");
+
+  photo = loadImage("Intro_v2_0134.png");
 }
 
 
@@ -107,6 +113,10 @@ void updateLeap(){
     for(Hand hand : leap.getHands()){
 
       handPos = hand.getPosition();
+
+      bridge.send("x", handPosition.x);
+      bridge.send("y", handPosition.y);
+      bridge.send("z", handPosition.z);
 
       // ========= FINGERS =========
 
@@ -208,7 +218,7 @@ void updatePass2(String fx) {
     effect1.set("y", norm(handPos.y, 0, height));
     effect1.set("z", norm(handPos.z, 0, 200));
     pass2.shader(effect1);
-    pass2.image(video, 0, 0, width, height);
+    pass2.image(photo, 0, 0, width, height);
   }
 
   else if(fx.equals("effect2")){
@@ -224,7 +234,7 @@ void updatePass2(String fx) {
     effect2.set("green", 0.0);
     effect2.set("blue", 0.0);
     pass2.shader(effect2);
-    pass2.image(video, x*z*4, y*z*4, width, height);
+    pass2.image(photo, x*z*4, y*z*4, width, height);
     pass2.resetShader();
 
     effect2.set("a", norm(pass2Alpha, 0, 255));
@@ -234,7 +244,7 @@ void updatePass2(String fx) {
     effect2.set("green", 1.0);
     effect2.set("blue", 0.0);
     pass2.shader(effect2);
-    pass2.image(video, x*z*3, y*z*3, width, height);
+    pass2.image(photo, x*z*3, y*z*3, width, height);
     pass2.resetShader();
 
     effect2.set("a", norm(pass2Alpha, 0, 255));
@@ -244,7 +254,7 @@ void updatePass2(String fx) {
     effect2.set("green", 0.0);
     effect2.set("blue", 1.0);
     pass2.shader(effect2);
-    pass2.image(video, x*z*2, y*z*2, width, height);
+    pass2.image(photo, x*z*2, y*z*2, width, height);
 
   }
 
@@ -261,7 +271,7 @@ void updatePass2(String fx) {
     effect3.set("green", 0.0);
     effect3.set("blue", 0.0);
     pass2.shader(effect3);
-    pass2.image(video, x*z*4, y*z*4, width, height);
+    pass2.image(photo, x*z*4, y*z*4, width, height);
     pass2.resetShader();
 
     effect3.set("a", norm(pass2Alpha, 0, 255));
@@ -271,7 +281,7 @@ void updatePass2(String fx) {
     effect3.set("green", 1.0);
     effect3.set("blue", 0.0);
     pass2.shader(effect3);
-    pass2.image(video, x*z*3, y*z*3, width, height);
+    pass2.image(photo, x*z*3, y*z*3, width, height);
     pass2.resetShader();
 
     effect3.set("a", norm(pass2Alpha, 0, 255));
@@ -281,7 +291,7 @@ void updatePass2(String fx) {
     effect3.set("green", 0.0);
     effect3.set("blue", 1.0);
     pass2.shader(effect3);
-    pass2.image(video, x*z*2, y*z*2, width, height);
+    pass2.image(photo, x*z*2, y*z*2, width, height);
 
   }
 
@@ -298,7 +308,7 @@ void updatePass2(String fx) {
     effect4.set("green", 0.0);
     effect4.set("blue", 0.0);
     pass2.shader(effect4);
-    pass2.image(video, x*z*4, y*z*4, width, height);
+    pass2.image(photo, x*z*4, y*z*4, width, height);
     pass2.resetShader();
 
     effect4.set("a", norm(pass2Alpha, 0, 255));
@@ -308,7 +318,7 @@ void updatePass2(String fx) {
     effect4.set("green", 1.0);
     effect4.set("blue", 0.0);
     pass2.shader(effect4);
-    pass2.image(video, x*z*3, y*z*3, width, height);
+    pass2.image(photo, x*z*3, y*z*3, width, height);
     pass2.resetShader();
 
     effect4.set("a", norm(pass2Alpha, 0, 255));
@@ -318,7 +328,7 @@ void updatePass2(String fx) {
     effect4.set("green", 0.0);
     effect4.set("blue", 1.0);
     pass2.shader(effect4);
-    pass2.image(video, x*z*2, y*z*2, width, height);
+    pass2.image(photo, x*z*2, y*z*2, width, height);
 
   }
 
@@ -328,7 +338,7 @@ void updatePass2(String fx) {
     glow.set("a", norm(pass2Alpha, 0, 255));
     glow.set("intensity", z);
     pass2.shader(glow);
-    pass2.image(video, 0, 0, width, height);
+    pass2.image(photo, 0, 0, width, height);
   }
 
   else if(fx.equals("glow2")){
@@ -337,7 +347,7 @@ void updatePass2(String fx) {
     glow2.set("a", norm(pass2Alpha, 0, 255));
     glow2.set("intensity", z);
     pass2.shader(glow2);
-    pass2.image(video, 0, 0, width, height);
+    pass2.image(photo, 0, 0, width, height);
   }
 
   else if(fx.equals("colorizeCircle")){
@@ -346,7 +356,7 @@ void updatePass2(String fx) {
       colorizeCircle.set("maskTexture_f"+i, fingerMaskArray.get(i).draw());
     }
     pass2.shader(colorizeCircle);
-    pass2.image(video, 0, 0, width, height);
+    pass2.image(photo, 0, 0, width, height);
   }
 
   pass2.resetShader();

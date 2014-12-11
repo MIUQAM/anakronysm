@@ -9,3 +9,4 @@ _old/*
 .*/
 data/pngs/**/*.png
 !data/pngs/Intro_v2/*.png
+data/Main/*.png
