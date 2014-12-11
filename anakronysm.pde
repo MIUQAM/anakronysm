@@ -76,7 +76,7 @@ float glitchesOpacity;
 
 
 void setup() {
-  size(854, 480, OPENGL);
+  size(1280, 720, OPENGL);
   frameRate(30);
 
   // Affiche les noms des ports.
@@ -142,6 +142,7 @@ void setup() {
 
 
 void draw() {
+  //scale(2);
   noStroke();
 
   try {
