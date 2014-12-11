@@ -92,6 +92,12 @@ class TimeoutP5 {
     return this.finished;
   }
 
+  void reset(){
+    if(this.isStarted()){
+      this.savedTime = millis();
+    }
+  }
+
   // The function isStarted() returns true if the timer started.
   boolean isStarted() { 
     return this.started;
