@@ -169,7 +169,7 @@ void draw() {
         image(pass1, 100, 0);
         image(pass1Cadre, 0, 0);
         //image(photo, 0, 0);
-        image(pass2, 100, 0, 654, height);
+        image(pass2, 100, 0);
         image(pass3, 0, 0);
         //image(video.getPg(), 0, 0);
         //image(cadre.getPg(), 0, 0);
@@ -202,7 +202,7 @@ void setupVideos(){
 
   video = new Videos(this, videos, videosLengths);
   video.play();
-  video.setFrame(random(0, 1823));
+  video.setFrame(random(0, 44510));
 
 
   cadreL.add("videos/Film_strip/Film Strip 02_");
