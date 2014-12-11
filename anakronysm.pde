@@ -197,12 +197,15 @@ void draw() {
 }
 
 void setupVideos(){
-  videos.add("Main/Main");
-  videosLengths.add(44510);
+  // videos.add("Main/Main");
+  // videosLengths.add(44510);
+
+  videos.add("pngs/Alice In Wonderland/Alice In Wonderland");
+  videosLengths.add(1594);
 
   video = new Videos(this, videos, videosLengths);
   video.play();
-  video.setFrame(random(0, 1823));
+  video.setFrame(random(0, 1594));
 
 
   cadreL.add("videos/Film_strip/Film Strip 02_");
