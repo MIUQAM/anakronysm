@@ -155,7 +155,6 @@ void draw() {
       updatePass2(shadersManager.getCurrentShader());
 
     }
-    speed = video.getSpeed();
     // intro.update();
     background(0);
 
@@ -194,6 +193,11 @@ void draw() {
     }
   }
 
+}
+
+float getOpacity(){
+  speed = video.getSpeed();
+  return map(abs(speed),0,2,0,255);
 }
 
 void setupVideos(){
