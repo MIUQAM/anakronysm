@@ -216,7 +216,12 @@ void updateOffset(){
   // (2*sin(2*x*2*3.14159)/10/x)
   float x = this.video.getSpeed();
   // offset = int( sin(1/(pow(x, 1.2))) * 100);
-  offset = int( (2*sin(2*x*2*3.14159)/10/x) * 100 );
+  float off = (2*sin(2*x*2*3.14159)/10/x);
+  if(offset > 1){
+    offset = 1;
+  }
+
+  offset = int(off * 100);
   // println("offset: "+offset);
 }
 
