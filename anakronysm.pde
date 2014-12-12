@@ -78,6 +78,8 @@ float speed = 0;
 float glitchesOpacity;
 
 
+int offset;
+
 void setup() {
   size(1280, 720, OPENGL);
   frameRate(30);
@@ -173,10 +175,15 @@ void draw() {
         updatePass2(shadersManager.getCurrentShader());
         updatePass3(shadersManager.getCurrentShader());
 
-        image(pass1, 0, 0);
+        // image(lastPass1,0,0);
+        // image(lastPass2,0,0)
+
+        updateOffset();
+
+        image(pass1, 0, 0 + offset);
         image(pass1Cadre, 0, 0);
         //image(photo, 0, 0);
-        image(pass2, 0, 0);
+        image(pass2, 0, 0 + offset);
         image(pass3, 0, 0);
         //image(video.getPg(), 0, 0);
         //image(cadre.getPg(), 0, 0);
@@ -203,12 +210,22 @@ void draw() {
 
 }
 
-void setupVideos(){
-   videos.add("Main/Main");
-   videosLengths.add(44510);
+void updateOffset(){
+  // offset = int( sin(this.video.getSpeed() * 9) * 100 );
+  // sin(1/(x^1.2))
+  // (2*sin(2*x*2*3.14159)/10/x)
+  float x = this.video.getSpeed();
+  // offset = int( sin(1/(pow(x, 1.2))) * 100);
+  offset = int( (2*sin(2*x*2*3.14159)/10/x) * 100 );
+  // println("offset: "+offset);
+}
 
-  //videos.add("pngs/Alice In Wonderland/Alice In Wonderland");
-  //videosLengths.add(1594);
+void setupVideos(){
+   // videos.add("Main/Main");
+   // videosLengths.add(44510);
+
+  videos.add("pngs/Intro_v2/Intro_v2_");
+  videosLengths.add(224);
 
   video = new Videos(this, videos, videosLengths);
   video.play();
