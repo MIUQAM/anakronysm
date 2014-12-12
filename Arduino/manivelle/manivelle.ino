@@ -1,5 +1,5 @@
 #define ENCODER_A 2
-#define ENCODER_B 3
+#define ENCODER_B 4
 
 volatile boolean encoderMoved = false;
 volatile byte encoderValue = 0;

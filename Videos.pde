@@ -173,6 +173,10 @@ class Videos {
         return this.speed;
     }
 
+    public void goToStart(){
+        this.getCurrentVideo().goToStart();
+    }
+
     public void goToRandom(){
         this.getCurrentVideo().goToRandom();
     }
