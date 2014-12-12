@@ -643,7 +643,7 @@ void checkScreenSaver(){
             screensaving = false;
             this.timeoutScreenSaving.stop();
             // println("stopping timeout");
-            this.video.goToRandom();
+            this.intro.goToStart();
         }
     }else{
         //Si pas d'entrée
@@ -657,6 +657,7 @@ void checkScreenSaver(){
             }
             if(this.timeoutScreenSaving.isFinished()){
                 screensaving = true;
+                this.video.goToRandom();
             }
         }
         //Si entrée
