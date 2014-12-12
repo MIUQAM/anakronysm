@@ -43,6 +43,7 @@ ArrayList<Integer> introLengths = new ArrayList<Integer>();
 
 boolean screensaving = false;
 TimeoutP5 timeoutScreenSaving;
+TimeoutP5 timeoutEffectSwitch;
 
 int tickCount = 0;
 
@@ -155,6 +156,7 @@ void draw() {
   }
 
   checkScreenSaver();
+  checkEffectChange();
 
     // intro.update();
     background(0);
@@ -226,6 +228,9 @@ void setupVideos(){
 
   this.timeoutScreenSaving = new TimeoutP5(10000, false);
   this.timeoutScreenSaving.start();
+
+  this.timeoutEffectSwitch = new TimeoutP5(15 * 1000, true);
+  this.timeoutEffectSwitch.start();
 }
 
 
@@ -662,6 +667,16 @@ void checkScreenSaver(){
         }
     }
     tickCount = 0;
+}
+
+void checkEffectChange(){
+  if(this.timeoutEffectSwitch.isFinished()){
+    this.shadersManager.switchShader();
+  }
+}
+
+void changeEffectRandom(){
+
 }
 
 // ========= CALLBACKS =========
