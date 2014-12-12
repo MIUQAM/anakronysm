@@ -202,11 +202,11 @@ void draw() {
 }
 
 void setupVideos(){
-  // videos.add("Main/Main");
-  // videosLengths.add(44510);
+   videos.add("Main/Main");
+   videosLengths.add(44510);
 
-  videos.add("pngs/Alice In Wonderland/Alice In Wonderland");
-  videosLengths.add(1594);
+  //videos.add("pngs/Alice In Wonderland/Alice In Wonderland");
+  //videosLengths.add(1594);
 
   video = new Videos(this, videos, videosLengths);
   video.play();
@@ -234,6 +234,8 @@ void updateLeap(){
   int fps = leap.getFrameRate();
 
   if(leap.getHands().size() > 0){
+
+    tickCount = 100;
 
     pass2Visible = true;
 
@@ -305,7 +307,10 @@ void updatePass1Cadre() {
 
 void updatePass2(String fx) {
 
-  // println("handPos.z: "+handPos.z);
+   //println("handPos.z: "+handPos.z); // 20 à 70
+   //println("handPos.x: "+handPos.x); // 300 à 1150
+   //println("handPos.y: "+handPos.y); // 300 à 640
+
 
   pass2.beginDraw();
   
@@ -632,18 +637,18 @@ void checkScreenSaver(){
         if (tickCount >= 2 || tickCount <= -2){
             screensaving = false;
             this.timeoutScreenSaving.stop();
-            println("stopping timeout");
+            // println("stopping timeout");
             this.video.goToRandom();
         }
     }else{
         //Si pas d'entrée
         if (tickCount < 2 && tickCount > -2){
-            println("pas d'entree.");
+            //println("pas d'entree.");
             if(!this.timeoutScreenSaving.isStarted()){
               screensaving = false;
               this.timeoutScreenSaving.reset();
               this.timeoutScreenSaving.start();
-              println("starting timeout");
+              //println("starting timeout");
             }
             if(this.timeoutScreenSaving.isFinished()){
                 screensaving = true;
@@ -653,7 +658,7 @@ void checkScreenSaver(){
         else{
           screensaving = false;
           this.timeoutScreenSaving.reset();
-          println("resetting timeout");
+          //println("resetting timeout");
         }
     }
     tickCount = 0;
