@@ -210,7 +210,7 @@ void setupVideos(){
 
   video = new Videos(this, videos, videosLengths);
   video.play();
-  video.setFrame(random(0, 1594));
+  video.goToRandom();
 
 
   cadreL.add("videos/Film_strip/Film Strip 02_");
@@ -633,6 +633,7 @@ void checkScreenSaver(){
             screensaving = false;
             this.timeoutScreenSaving.stop();
             println("stopping timeout");
+            this.video.goToRandom();
         }
     }else{
         //Si pas d'entrée

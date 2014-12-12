@@ -173,6 +173,10 @@ class Videos {
         return this.speed;
     }
 
+    public void goToRandom(){
+        this.getCurrentVideo().goToRandom();
+    }
+
     public void setFrame(float frame){
         this.getCurrentVideo().setFrame(frame);
     }

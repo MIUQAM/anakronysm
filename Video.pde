@@ -37,6 +37,10 @@ class Video {
         this.speed = speed;
     }
 
+    void goToRandom(){
+        this.setFrame(int(random(0, this.sourceLength)));
+    }
+
     private void setFrame(float frame){
         this.timehead = frame;
         this.currentFrame = floor(this.timehead);
