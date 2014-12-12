@@ -14,7 +14,7 @@ import processing.serial.*;
 
 boolean fullscreen = true;
 
-boolean debug = true;
+boolean debug = false;
 Debugger debugger = new Debugger();
 
 LeapMotion leap;
@@ -208,6 +208,10 @@ void draw() {
     // debugger.draw();
   }
 
+  pushStyle();
+  fill(0,0,0);
+  rect(0, height - 68, width, 68);
+  popStyle();
 }
 
 void updateOffset(){
@@ -221,7 +225,7 @@ void updateOffset(){
     off = 0.5;
   }
 
-  offset = int(off * 100);
+  offset = int(off * 50);
   // println("offset: "+offset);
 }
 

@@ -5,7 +5,7 @@
 			"major" : 7,
 			"minor" : 0,
 			"revision" : 0,
-			"architecture" : "x86",
+			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
@@ -71,19 +71,6 @@
 					"patching_rect" : [ 280.0, 224.0, 36.0, 22.0 ],
 					"style" : "",
 					"text" : "*~ 0."
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-8",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 2,
-					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 500.0, 106.0, 55.0, 22.0 ],
-					"style" : "",
-					"text" : "route #2"
 				}
 
 			}
@@ -235,29 +222,10 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-33", 1 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-7", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-8", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-7", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-29", 1 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"midpoints" : [ 509.5, 166.0, 306.5, 166.0 ],
-					"source" : [ "obj-8", 0 ]
+					"source" : [ "obj-7", 0 ]
 				}
 
 			}
@@ -266,8 +234,16 @@
 					"destination" : [ "obj-30", 1 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"midpoints" : [ 509.5, 166.0, 432.5, 166.0 ],
-					"source" : [ "obj-8", 0 ]
+					"source" : [ "obj-7", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-33", 1 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-7", 0 ]
 				}
 
 			}
