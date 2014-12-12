@@ -486,7 +486,7 @@ void updatePass3(String fx) {
 
   if(fx.equals("effect1")){
     pass3.clear();
-    effect1.set("a", cadre.getOpacity());
+    effect1.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     effect1.set("x", norm(handPos.x, 300, 1150));
     effect1.set("y", norm(handPos.y, 300, 640));
     effect1.set("z", norm(handPos.z, 10, 70));
@@ -500,7 +500,7 @@ void updatePass3(String fx) {
     float y = map(handPos.y, 300, 640, -1.0, 1.0);
     float z = map(handPos.z, 10, 70, 0, 20);
     
-    effect2.set("a", cadre.getOpacity());
+    effect2.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     effect2.set("x", abs(x) + 0.25);
     effect2.set("y", abs(y) + 0.25);
     effect2.set("red", 1.0);
@@ -510,7 +510,7 @@ void updatePass3(String fx) {
     pass3.image(cadre.getCurrentVideo().getPImage(), x*z*8, y*z*8, width, height);
     pass3.resetShader();
 
-    effect2.set("a", cadre.getOpacity());
+    effect2.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     effect2.set("x", abs(x) + 0.25);
     effect2.set("y", abs(y) + 0.25);
     effect2.set("red", 0.0);
@@ -520,7 +520,7 @@ void updatePass3(String fx) {
     pass3.image(cadre.getCurrentVideo().getPImage(), x*z*6, y*z*6, width, height);
     pass3.resetShader();
 
-    effect2.set("a", cadre.getOpacity());
+    effect2.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     effect2.set("x", abs(x) + 0.25);
     effect2.set("y", abs(y) + 0.25);
     effect2.set("red", 0.0);
@@ -537,7 +537,7 @@ void updatePass3(String fx) {
     float y = map(handPos.y, 300, 640, -1.0, 1.0);
     float z = map(handPos.z, 10, 70, 0, 20);
     
-    effect3.set("a", cadre.getOpacity());
+    effect3.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     effect3.set("x", abs(x) + 0.1);
     effect3.set("y", abs(y) + 0.1);
     effect3.set("red", 1.0);
@@ -547,7 +547,7 @@ void updatePass3(String fx) {
     pass3.image(cadre.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
     pass3.resetShader();
 
-    effect3.set("a", cadre.getOpacity());
+    effect3.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     effect3.set("x", abs(x) + 0.1);
     effect3.set("y", abs(y) + 0.1);
     effect3.set("red", 0.0);
@@ -557,7 +557,7 @@ void updatePass3(String fx) {
     pass3.image(cadre.getCurrentVideo().getPImage(), x*z*3, y*z*3, width, height);
     pass3.resetShader();
 
-    effect3.set("a", cadre.getOpacity());
+    effect3.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     effect3.set("x", abs(x) + 0.1);
     effect3.set("y", abs(y) + 0.1);
     effect3.set("red", 0.0);
@@ -574,7 +574,7 @@ void updatePass3(String fx) {
     float y = map(handPos.y, 300, 640, -1.0, 1.0);
     float z = map(handPos.z, 10, 70, 0, 20);
     
-    effect4.set("a", cadre.getOpacity());
+    effect4.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     effect4.set("x", abs(x) + 0.1);
     effect4.set("y", abs(y) + 0.1);
     effect4.set("red", 1.0);
@@ -584,7 +584,7 @@ void updatePass3(String fx) {
     pass3.image(cadre.getCurrentVideo().getPImage(), x*z*4, y*z*4, width, height);
     pass3.resetShader();
 
-    effect4.set("a", cadre.getOpacity());
+    effect4.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     effect4.set("x", abs(x) + 0.1);
     effect4.set("y", abs(y) + 0.1);
     effect4.set("red", 0.0);
@@ -594,7 +594,7 @@ void updatePass3(String fx) {
     pass3.image(cadre.getCurrentVideo().getPImage(), x*z*3, y*z*3, width, height);
     pass3.resetShader();
 
-    effect4.set("a", cadre.getOpacity());
+    effect4.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     effect4.set("x", abs(x) + 0.1);
     effect4.set("y", abs(y) + 0.1);
     effect4.set("red", 0.0);
@@ -610,7 +610,7 @@ void updatePass3(String fx) {
     float z = map(handPos.z, 10, 70, 0.9, 0.95);
     println("z: "+z);
     println("handPos.z: "+handPos.z);
-    glow.set("a", cadre.getOpacity());
+    glow.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     glow.set("intensity", 0.0);
     pass3.shader(glow);
     pass3.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
@@ -619,7 +619,7 @@ void updatePass3(String fx) {
   else if(fx.equals("glow2")){
     pass3.clear();
     float z = map(handPos.z, 10, 70, 0.001, 0.02);
-    glow2.set("a", cadre.getOpacity());
+    glow2.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     glow2.set("intensity", 0.0);
     pass3.shader(glow2);
     pass3.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);

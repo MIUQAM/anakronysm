@@ -32,12 +32,6 @@ class ShadersManager {
             }
         }
 
-
-
-        randomIndex = 6;
-
-
-
         this.currentShader = randomIndex;
     }
 
