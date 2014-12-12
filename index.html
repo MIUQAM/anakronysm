@@ -21,6 +21,9 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/video-js.min.css">
+  <link rel="stylesheet" href="css/bigvideo.css">
+  <link rel="stylesheet" href="css/app.css">
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -32,15 +35,30 @@
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
-    <div class="row">
-      <div class="one-half column" style="margin-top: 25%">
-        <h4>Basic Page</h4>
-        <p>This index.html page is a placeholder with the CSS, font and favicon. It's just waiting for you to add some content! If you need some help hit up the <a href="http://www.getskeleton.com">Skeleton documentation</a>.</p>
+      <div class="box">
+        <div class="va">
+          <h1><img src="images/logo.png" height="271" width="855" alt="Logo"></h1>
+          <p>Recréant l’univers ludique des premiers dessins animés, Anakronysm vous propose un saut dans le temps, permettant à chaque utilisateur de devenir un projectionniste du début du 20e siècle en utilisant la technologie d’aujourd’hui.</p>
+          <p>Rejoignez-nous vendredi 12 décembre à partir de 17h au Pavillon J.-E. !</p>
+          <p><a href="https://www.facebook.com/events/612449238881263/" target="_blank">Évènement Facebook</a></p>
+        </div>
       </div>
-    </div>
   </div>
 
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="javascripts/video.js"></script>
+<script src="javascripts/bigvideo.js"></script>
+<script>
+  $(function() {
+      var BV = new $.BigVideo();
+      BV.init();
+      // BV.show('videos/anakronysm.mp4');
+      BV.show('http://vjs.zencdn.net/v/oceans.mp4');
+  });
+</script>
+
 </body>
 </html>
