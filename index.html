@@ -62,9 +62,15 @@
   $(function() {
       var BV = new $.BigVideo();
       BV.init();
-      BV.show('videos/alice.webm',{
-        ambient:true
-      });
+      var touch = 'ontouchstart' in document.documentElement;
+      if(touch){
+        BV.show('images/background-default.png');
+      }
+      else{
+        BV.show('videos/alice.webm',{
+          ambient:true
+        });
+      }
   });
 </script>
 
