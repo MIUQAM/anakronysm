@@ -142,7 +142,7 @@ class Videos {
 
         } else {
 
-             println("!available");
+             //println("!available");
         }
         
         // }

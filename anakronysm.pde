@@ -608,8 +608,8 @@ void updatePass3(String fx) {
   else if(fx.equals("glow")){
     pass3.clear();
     float z = map(handPos.z, 10, 70, 0.9, 0.95);
-    println("z: "+z);
-    println("handPos.z: "+handPos.z);
+    //println("z: "+z);
+    //println("handPos.z: "+handPos.z);
     glow.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     glow.set("intensity", 0.0);
     pass3.shader(glow);

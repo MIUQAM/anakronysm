@@ -25,7 +25,7 @@ class Debugger {
             fill(0);
             stroke(0);
             textSize(10);
-            println("this.names.get(0): "+this.names.get(0));
+            //println("this.names.get(0): "+this.names.get(0));
             for (int i = 0; i < this.names.size(); i++) {
                 pushMatrix();
                 // translate(0, i * 10, 0);

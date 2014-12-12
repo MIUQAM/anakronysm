@@ -50,7 +50,7 @@ class Video {
         this.currentFrame = floor(this.timehead);
         //this.currentFrame  = floor(timehead);
         this.loader.setFrame(this.currentFrame);
-        println("currentFrame: "+currentFrame);
+        //println("currentFrame: "+currentFrame);
     }
 
     float getFrame(){
