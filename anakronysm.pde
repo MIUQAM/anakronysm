@@ -330,7 +330,7 @@ void updatePass2(String fx) {
     effect1.set("a", norm(pass2Alpha, 0, 255));
     effect1.set("x", norm(handPos.x, 300, 1150));
     effect1.set("y", norm(handPos.y, 300, 640));
-    effect1.set("z", norm(handPos.z, 20, 70));
+    effect1.set("z", norm(handPos.z, 10, 70));
     pass2.shader(effect1);
     pass2.image(video.getCurrentVideo().getPImage(), 0, 0, width, height);
   }
@@ -339,7 +339,7 @@ void updatePass2(String fx) {
     pass2.clear();
     float x = map(handPos.x, 300, 1150, -1.0, 1.0);
     float y = map(handPos.y, 300, 640, -1.0, 1.0);
-    float z = map(handPos.z, 20, 70, 0, 20);
+    float z = map(handPos.z, 10, 70, 0, 20);
     
     effect2.set("a", norm(pass2Alpha, 0, 255));
     effect2.set("x", abs(x) + 0.25);
@@ -376,7 +376,7 @@ void updatePass2(String fx) {
     pass2.clear();
     float x = map(handPos.x, 300, 1150, -1.0, 1.0);
     float y = map(handPos.y, 300, 640, -1.0, 1.0);
-    float z = map(handPos.z, 20, 70, 0, 20);
+    float z = map(handPos.z, 10, 70, 0, 20);
     
     effect3.set("a", norm(pass2Alpha, 0, 255));
     effect3.set("x", abs(x) + 0.1);
@@ -413,7 +413,7 @@ void updatePass2(String fx) {
     pass2.clear();
     float x = map(handPos.x, 300, 1150, -1.0, 1.0);
     float y = map(handPos.y, 300, 640, -1.0, 1.0);
-    float z = map(handPos.z, 20, 70, 0, 20);
+    float z = map(handPos.z, 10, 70, 0, 20);
     
     effect4.set("a", norm(pass2Alpha, 0, 255));
     effect4.set("x", abs(x) + 0.1);
@@ -448,7 +448,7 @@ void updatePass2(String fx) {
 
   else if(fx.equals("glow")){
     pass2.clear();
-    float z = map(handPos.z, 20, 70, 0.85, 0.9);
+    float z = map(handPos.z, 10, 70, 0.75, .95);
     glow.set("a", norm(pass2Alpha, 0, 255));
     glow.set("intensity", z);
     pass2.shader(glow);
@@ -457,7 +457,7 @@ void updatePass2(String fx) {
 
   else if(fx.equals("glow2")){
     pass2.clear();
-    float z = map(handPos.z, 20, 70, 0.001, 0.03);
+    float z = map(handPos.z, 10, 70, 0.001, 0.02);
     glow2.set("a", norm(pass2Alpha, 0, 255));
     glow2.set("intensity", z);
     pass2.shader(glow2);
@@ -489,7 +489,7 @@ void updatePass3(String fx) {
     effect1.set("a", cadre.getOpacity());
     effect1.set("x", norm(handPos.x, 300, 1150));
     effect1.set("y", norm(handPos.y, 300, 640));
-    effect1.set("z", norm(handPos.z, 20, 70));
+    effect1.set("z", norm(handPos.z, 10, 70));
     pass3.shader(effect1);
     pass3.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
   }
@@ -498,7 +498,7 @@ void updatePass3(String fx) {
     pass3.clear();
     float x = map(handPos.x, 300, 1150, -1.0, 1.0);
     float y = map(handPos.y, 300, 640, -1.0, 1.0);
-    float z = map(handPos.z, 20, 70, 0, 20);
+    float z = map(handPos.z, 10, 70, 0, 20);
     
     effect2.set("a", cadre.getOpacity());
     effect2.set("x", abs(x) + 0.25);
@@ -535,7 +535,7 @@ void updatePass3(String fx) {
     pass3.clear();
     float x = map(handPos.x, 300, 1150, -1.0, 1.0);
     float y = map(handPos.y, 300, 640, -1.0, 1.0);
-    float z = map(handPos.z, 20, 70, 0, 20);
+    float z = map(handPos.z, 10, 70, 0, 20);
     
     effect3.set("a", cadre.getOpacity());
     effect3.set("x", abs(x) + 0.1);
@@ -572,7 +572,7 @@ void updatePass3(String fx) {
     pass3.clear();
     float x = map(handPos.x, 300, 1150, -1.0, 1.0);
     float y = map(handPos.y, 300, 640, -1.0, 1.0);
-    float z = map(handPos.z, 20, 70, 0, 20);
+    float z = map(handPos.z, 10, 70, 0, 20);
     
     effect4.set("a", cadre.getOpacity());
     effect4.set("x", abs(x) + 0.1);
@@ -607,18 +607,20 @@ void updatePass3(String fx) {
 
   else if(fx.equals("glow")){
     pass3.clear();
-    float z = map(handPos.z, 20, 70, 0.85, 1.0);
+    float z = map(handPos.z, 10, 70, 0.9, 0.95);
+    println("z: "+z);
+    println("handPos.z: "+handPos.z);
     glow.set("a", cadre.getOpacity());
-    glow.set("intensity", z);
+    glow.set("intensity", 0.0);
     pass3.shader(glow);
     pass3.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
   }
 
   else if(fx.equals("glow2")){
     pass3.clear();
-    float z = map(handPos.z, 20, 70, 0.001, 0.03);
+    float z = map(handPos.z, 10, 70, 0.001, 0.02);
     glow2.set("a", cadre.getOpacity());
-    glow2.set("intensity", z);
+    glow2.set("intensity", 0.0);
     pass3.shader(glow2);
     pass3.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
   }
