@@ -221,11 +221,11 @@ void updateOffset(){
 }
 
 void setupVideos(){
-   // videos.add("Main/Main");
-   // videosLengths.add(44510);
+   videos.add("Main/Main");
+   videosLengths.add(44510);
 
-  videos.add("pngs/Intro_v2/Intro_v2_");
-  videosLengths.add(224);
+  //videos.add("pngs/Intro_v2/Intro_v2_");
+  //videosLengths.add(224);
 
   video = new Videos(this, videos, videosLengths);
   video.play();
