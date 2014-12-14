@@ -12,7 +12,7 @@ import de.voidplus.leapmotion.*;
 import processing.opengl.*;
 import processing.serial.*;
 
-boolean fullscreen = true;
+boolean fullscreen = false;
 
 boolean debug = false;
 Debugger debugger = new Debugger();
@@ -209,6 +209,7 @@ void draw() {
     // debugger.draw();
   }
 
+  // Barre noire dans le bas pour masquer l'overflow
   pushStyle();
   fill(0,0,0);
   rect(0, height - 68, width, 68);
@@ -231,7 +232,7 @@ void updateOffset(){
 }
 
 void setupVideos(){
-   videos.add("Main/Main");
+   videos.add("videos/Main/Main");
    videosLengths.add(44510);
 
   //videos.add("pngs/Intro_v2/Intro_v2_");
@@ -248,7 +249,7 @@ void setupVideos(){
   cadre.play();
   cadre.opacityAffected = true;
 
-  introL.add("pngs/Intro_v2/Intro_v2_");
+  introL.add("videos/Intro_v2/Intro_v2_");
   introLengths.add(224);
   intro = new Videos(this, introL, introLengths);
   intro.play();

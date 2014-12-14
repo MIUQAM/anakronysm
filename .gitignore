@@ -7,6 +7,4 @@ _old/*
 **/build-tmp/*
 *.log
 .*/
-data/pngs/**/*.png
-data/Main/*.png
-data/videos/*.png
+data/videos/Main/*.png
