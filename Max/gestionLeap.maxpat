@@ -1130,17 +1130,6 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-37",
-					"maxclass" : "ezdac~",
-					"numinlets" : 2,
-					"numoutlets" : 0,
-					"patching_rect" : [ 1514.714478, 1300.0, 45.0, 45.0 ],
-					"style" : ""
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-33",
 					"maxclass" : "newobj",
 					"numinlets" : 0,
@@ -3318,25 +3307,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-37", 1 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-208", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-11", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-209", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-37", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-209", 0 ]
@@ -3997,12 +3968,12 @@
 			}
  ],
 		"parameters" : 		{
-			"obj-211" : [ "live.gain~[32]", "live.gain~", 0 ],
-			"obj-183" : [ "live.gain~[28]", "live.gain~[3]", 0 ],
 			"obj-12" : [ "live.gain~[1]", "live.gain~[1]", 0 ],
+			"obj-211" : [ "live.gain~[32]", "live.gain~", 0 ],
+			"obj-7" : [ "live.gain~", "live.gain~", 0 ],
+			"obj-183" : [ "live.gain~[28]", "live.gain~[3]", 0 ],
 			"obj-182" : [ "live.gain~[29]", "live.gain~[3]", 0 ],
-			"obj-25" : [ "live.gain~[30]", "live.gain~[3]", 0 ],
-			"obj-7" : [ "live.gain~", "live.gain~", 0 ]
+			"obj-25" : [ "live.gain~[30]", "live.gain~[3]", 0 ]
 		}
 ,
 		"dependency_cache" : [  ],
