@@ -16,8 +16,9 @@ La librairie [leap-motion-processing](https://github.com/voidplus/leap-motion-pr
 
 ## Éxécution
 
-1. Lancer le sketch anakronysm.pde
-2. Lancer le patch max Max/master.maxpat
+1. Lancer le patch max Max/master.maxpat
+2. Lancer le sketch anakronysm.pde
+3. Enjoy!
 
 ## Colaborating
 Afin d'utiliser le repository, vous pouvez utiliser [Github for Windows](https://windows.github.com/) ou [Github for Mac](https://mac.github.com/)
