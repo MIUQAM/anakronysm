@@ -12,7 +12,7 @@
 1. Placer les PNGs de vidéos dans le dossier [data/videos/](data/videos/)
 
 ## Note
-La librairie [leap-motion-proessing](https://github.com/voidplus/leap-motion-processing) doit être installée dans le dossier Processing de l'utilisateur actuel.
+La librairie [leap-motion-processing](https://github.com/voidplus/leap-motion-processing) doit être installée dans le dossier Processing de l'utilisateur actuel.
 
 ## Éxécution
 
