@@ -8,5 +8,5 @@ _old/*
 *.log
 .*/
 data/pngs/**/*.png
-!data/pngs/Intro_v2/*.png
 data/Main/*.png
+data/videos/*.png
