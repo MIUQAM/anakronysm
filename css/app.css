@@ -32,3 +32,22 @@ img{
   background-image: url('../images/background-default.png');
   background-size: cover;
 }
+
+#follow{
+  height: 20px;
+}
+
+#follow > *{
+  vertical-align: middle;
+}
+
+#fb-like, #gh-star{
+  height: 20px;
+  display: inline-block;
+  padding: 0 5px;
+}
+
+#fb-like > .fb-like > span{
+  height: 100%;
+  vertical-align: initial !important;
+}
