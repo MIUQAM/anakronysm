@@ -29,8 +29,8 @@ img{
 
 #big-video-wrap{
   opacity: 0.25;
-  -webkit-filter: blur(10px); -moz-filter: blur(10px); -o-filter: blur(10px); -ms-filter: blur(10px); filter: blur(10px);
-  background-image: url('../images/background-default.png');
+  -webkit-filter: blur(5px); -moz-filter: blur(5px); -o-filter: blur(5px); -ms-filter: blur(5px); filter: blur(5px);
+  background-image: url('../images/background.jpg');
   background-size: cover;
 }
 
@@ -56,6 +56,7 @@ img{
 .featured{
   position: relative;
   display: inline-block;
+  margin: 20px 0px;
 }
 
 .featured .on{
