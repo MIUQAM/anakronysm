@@ -27,7 +27,7 @@ La librairie [leap-motion-processing](https://github.com/voidplus/leap-motion-pr
 ### License
 Ce projet est sous license MIT. Voir le fichier LICENSE pour plus de détails.
 
-### Réalisé par : 
+### Réalisé par
 - Pier Oliver Bourgault - programmation effets sonores,
 - [Marc-Antoine Brodeur](https://github.com/mabrodeur) - programmation effets visuels + arduino,
 - Alexandre D'Avignon - direction artistique + identité visuelle + logo, rédacteur et recherchiste,
