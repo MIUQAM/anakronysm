@@ -24,6 +24,7 @@ img{
    display: table-cell;
    text-align: center;
    vertical-align: middle;
+   padding: 20px 0;
 }
 
 #big-video-wrap{
@@ -50,4 +51,28 @@ img{
 #fb-like > .fb-like > span{
   height: 100%;
   vertical-align: initial !important;
+}
+
+.featured{
+  position: relative;
+  display: inline-block;
+}
+
+.featured .on{
+  position: absolute;
+  right: 0px;
+
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: rgba(0,0,0,0.75);
+  opacity: 0.25;
+  transition: all 500ms;
+}
+
+.featured:hover .on{
+  opacity: 1;
+}
+
+#gh-ribbon{
+  position: fixed !important;
 }
