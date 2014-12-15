@@ -12,9 +12,9 @@ import de.voidplus.leapmotion.*;
 import processing.opengl.*;
 import processing.serial.*;
 
-boolean fullscreen = true;
+boolean fullscreen = false;
 
-boolean debug = true;
+boolean debug = false;
 Debugger debugger = new Debugger();
 
 LeapMotion leap;
@@ -44,6 +44,7 @@ ArrayList<Integer> introLengths = new ArrayList<Integer>();
 boolean screensaving = false;
 TimeoutP5 timeoutScreenSaving;
 TimeoutP5 timeoutEffectSwitch;
+TimeoutP5 timeoutVideoSwitch;
 
 int tickCount = 0;
 
@@ -208,6 +209,11 @@ void draw() {
     // debugger.draw();
   }
 
+  // Barre noire dans le bas pour masquer l'overflow
+  pushStyle();
+  fill(0,0,0);
+  rect(0, height - 68, width, 68);
+  popStyle();
 }
 
 void updateOffset(){
@@ -221,12 +227,12 @@ void updateOffset(){
     off = 0.5;
   }
 
-  offset = int(off * 100);
+  offset = int(off * 50);
   // println("offset: "+offset);
 }
 
 void setupVideos(){
-   videos.add("Main/Main");
+   videos.add("videos/Main/Main");
    videosLengths.add(44510);
 
   //videos.add("pngs/Intro_v2/Intro_v2_");
@@ -243,16 +249,19 @@ void setupVideos(){
   cadre.play();
   cadre.opacityAffected = true;
 
-  introL.add("pngs/Intro_v2/Intro_v2_");
+  introL.add("videos/Intro_v2/Intro_v2_");
   introLengths.add(224);
   intro = new Videos(this, introL, introLengths);
   intro.play();
 
-  this.timeoutScreenSaving = new TimeoutP5(10000, false);
+  this.timeoutScreenSaving = new TimeoutP5(5000, false);
   this.timeoutScreenSaving.start();
 
-  this.timeoutEffectSwitch = new TimeoutP5(15 * 1000, true);
+  this.timeoutEffectSwitch = new TimeoutP5(5 * 1000, true);
   this.timeoutEffectSwitch.start();
+
+  this.timeoutVideoSwitch = new TimeoutP5(5 * 1000, true);
+  this.timeoutVideoSwitch.start();
 }
 
 
@@ -665,6 +674,7 @@ void checkScreenSaver(){
     if(screensaving){
         if (tickCount >= 2 || tickCount <= -2){
             screensaving = false;
+            bridge.send("screensaving", 0);
             this.timeoutScreenSaving.stop();
             // println("stopping timeout");
             this.intro.goToStart();
@@ -675,18 +685,21 @@ void checkScreenSaver(){
             //println("pas d'entree.");
             if(!this.timeoutScreenSaving.isStarted()){
               screensaving = false;
+              bridge.send("screensaving", 0);
               this.timeoutScreenSaving.reset();
               this.timeoutScreenSaving.start();
               //println("starting timeout");
             }
             if(this.timeoutScreenSaving.isFinished()){
                 screensaving = true;
+                bridge.send("screensaving", 1);
                 this.video.goToRandom();
             }
         }
         //Si entrée
         else{
           screensaving = false;
+          bridge.send("screensaving", 0);
           this.timeoutScreenSaving.reset();
           //println("resetting timeout");
         }
@@ -695,8 +708,21 @@ void checkScreenSaver(){
 }
 
 void checkEffectChange(){
+  if(this.video.getSpeed() > 0.5 || this.video.getSpeed() < -0.5){
+    if(!this.timeoutVideoSwitch.isStarted()){
+      this.timeoutVideoSwitch.start();
+    }
+  }else{
+    this.timeoutVideoSwitch.reset();
+  }
+  if(this.timeoutVideoSwitch.isFinished()){
+    //this.shadersManager.switchShader();
+    this.video.goToRandom();
+  }
+
   if(this.timeoutEffectSwitch.isFinished()){
     this.shadersManager.switchShader();
+    //this.video.goToRandom();
   }
 }
 
