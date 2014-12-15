@@ -78,7 +78,10 @@
         BV.show('images/background-default.png');
       }
       else{
-        BV.show('videos/alice.webm',{
+        BV.show([
+        { type: "video/mp4",  src: "videos/alice.mp4" },
+        { type: "video/webm", src: "videos/alice.webm" }
+        ],{
           ambient:true
         });
       }
