@@ -6,7 +6,7 @@
 [http://miuqam.github.io/anakronysm/](http://miuqam.github.io/anakronysm/)
 
 ## Note
-La librairie [leap-motion-processing](https://github.com/voidplus/leap-motion-processing) doit être installée dans le dossier Processing de l'utilisateur actuel.
+La librairie [(leap-motion-processing)](https://github.com/voidplus/leap-motion-processing) doit être installée dans le dossier Processing de l'utilisateur actuel.
 
 ### Utilisation
 
