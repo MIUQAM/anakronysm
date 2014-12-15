@@ -33,3 +33,8 @@ Ce projet est sous license MIT. Voir le fichier LICENSE pour plus de détails.
 - Alexandre D'Avignon - direction artistique + identité visuelle + logo, rédacteur et recherchiste,
 - Erwan d'Orgeville - programmation de la gestion des vidéos,
 - Pierre-Luc Marrier - construction de l'installation + programmation effets sonores
+
+
+### Remerciments
+- [Jean-Maxime Couillard](https://github.com/jmcouillard) pour son aide avec la gestion des vidéos
+- [Jean-François Renaud](https://github.com/Morpholux) pour son encouragement et ces commentaires précieux qui nous ont aidés grandement dans la réalisation du projet.
