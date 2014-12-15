@@ -32,7 +32,7 @@ Ce projet est sous license MIT. Voir le fichier LICENSE pour plus de détails.
 - [Marc-Antoine Brodeur](http://marcantoinebrodeur.com) ([Github](https://github.com/mabrodeur)) - programmation effets visuels + arduino,
 - Alexandre D'Avignon - direction artistique + identité visuelle + logo, rédacteur et recherchiste,
 - [Erwan d'Orgeville](http://erwandorgeville.com) ([Github](https://github.com/th3m4ri0)) - programmation de la gestion des vidéos,
-- Pierre-Luc Marrier - construction de l'installation + programmation effets sonores
+- [Pierre-Luc Marrier](http://peterartvisuel.com/) - construction de l'installation + programmation effets sonores
 
 
 ### Remerciments
