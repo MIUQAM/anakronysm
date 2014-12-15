@@ -22,7 +22,7 @@ La librairie [leap-motion-processing](https://github.com/voidplus/leap-motion-pr
 - Pas mal de bois.
 
 ### Plans
-À venir.
+![Schema](https://raw.githubusercontent.com/MIUQAM/anakronysm/master/Arduino/manivelle/schema_branchement.png)
 
 ### License
 Ce projet est sous license MIT. Voir le fichier LICENSE pour plus de détails.
