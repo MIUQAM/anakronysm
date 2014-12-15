@@ -28,8 +28,8 @@ La librairie [leap-motion-processing](https://github.com/voidplus/leap-motion-pr
 Ce projet est sous license MIT. Voir le fichier LICENSE pour plus de détails.
 
 ### Crédits
-Pier Oliver Bourgault - programmation effets sonores, </br>
-Marc-Antoine Brodeur - programmation effets visuels + arduino, </br>
-Alexandre D'Avignon - direction artistique + identité visuelle + logo, rédacteur et recherchiste, </br>
-Erwan d'Orgeville - programmation de la gestion des vidéos, </br>
-Pierre-Luc Marrier - construction de l'installation + programmation effets sonores
+- Pier Oliver Bourgault - programmation effets sonores,
+- Marc-Antoine Brodeur - programmation effets visuels + arduino,
+- Alexandre D'Avignon - direction artistique + identité visuelle + logo, rédacteur et recherchiste,
+- Erwan d'Orgeville - programmation de la gestion des vidéos,
+- Pierre-Luc Marrier - construction de l'installation + programmation effets sonores
