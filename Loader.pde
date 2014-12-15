@@ -24,21 +24,17 @@ public class Loader extends Thread {
     }
 
     public void run() {
-        // println("stop: "+stop);
 
         while (!stop) {
-            //println("stop: "+stop);
 
             int found = 0;
 
-            // Chargement des images de papillon
             for (int i=0; i<threshold; i++) {
                 int frame = (i + currentFrame - (threshold/2)) % framesTotal;
                 if (frame <0) frame = framesTotal + frame;
                 if (!imgs.containsKey(frame)) {
                     String src = source+fixedDigits(frame+1)+".png";
                     imgs.put(frame, p.loadImage(src));
-                    // println("src: "+src);
 
                     //System.out.println("Loaded " + frame);
                 } else {
@@ -46,7 +42,6 @@ public class Loader extends Thread {
                     //System.out.println("Already exists " + frame);
                 }
             }
-            //println("Images loaded : " + imgs.size());
 
             health = (float)found / threshold;
 
@@ -74,7 +69,6 @@ public class Loader extends Thread {
                 PImage img = imgs.get(key);
                 img = null;
                 imgs.remove(key);
-                // System.out.println("Key " + key + " needs to be disposed");
             }
         }
     }
@@ -94,21 +88,7 @@ public class Loader extends Thread {
     public void setUpdateDelay(int val) {
         updateDelay = val;
     }
-
-    // public String fixedDigits(int value) { 
-    //     if (value < 10) {
-    //         return "0000" + value;
-    //     } else  if (value < 100) {
-    //         return "000" + value;
-    //     } else  if (value < 1000) {
-    //         return "00" + value;
-    //     } else  if (value < 10000) {
-    //         return "0" + value;
-    //     } else {
-    //         return Integer.toString(value);
-    //     }
-    // }
-
+    
     public String fixedDigits(int value) { 
         if (value < 10) {
             return "000" + value;

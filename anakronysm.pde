@@ -1,6 +1,6 @@
 /**
 * Project : anakronysm 
-* Author : Pier-Olivier Bourgault, Marc-Antoine Brodeur, Alexandre d'Avignon, Erwan d'Orgeville, Pier Luc Marrier
+* Author : Pier-Olivier Bourgault, Marc-Antoine Brodeur, Alexandre D'Avignon, Erwan d'Orgeville, Pierre-Luc Marrier
 * Author URI : http://github.com/MIUQAM
 * License : MIT
 * Version : 1.0.0
@@ -140,7 +140,6 @@ void setup() {
   shadersManager.add("colorizeCircle");
   shadersManager.add("glow");
   shadersManager.add("glow2");
-  //shadersManager.add("");
 
   shadersManager.switchShader();
 
@@ -150,7 +149,6 @@ void setup() {
 
 
 void draw() {
-  //scale(2);
   noStroke();
 
   try {
@@ -161,7 +159,6 @@ void draw() {
   checkScreenSaver();
   checkEffectChange();
 
-    // intro.update();
     background(0);
 
     if(screensaving){
@@ -176,40 +173,23 @@ void draw() {
         updatePass2(shadersManager.getCurrentShader());
         updatePass3(shadersManager.getCurrentShader());
 
-        // image(lastPass1,0,0);
-        // image(lastPass2,0,0)
-
         updateOffset();
 
         image(pass1, 0, 0 + offset);
         image(pass1Cadre, 0, 0);
-        //image(photo, 0, 0);
         image(pass2, 0, 0 + offset);
         image(pass3, 0, 0);
-        //image(video.getPg(), 0, 0);
-        //image(cadre.getPg(), 0, 0);
-
-        //image(pass2, 0, 0);
     }
 
-
-    
-
-  //bridge.send("modul8/ctrl_layer_movie_playDirection", abs(video.speed));
-
-  //bridge.send("speed", abs(video.speed));
-  //bridge.send("dir", abs(video.speed)/video.speed);
-  //bridge.send("dir", video.direction);
 
   if(debug){
     if (frameCount % 30 == 1) {
       int fps = Math.round(frameRate);
       frame.setTitle(fps + "fps");
     }
-    // debugger.draw();
   }
 
-  // Barre noire dans le bas pour masquer l'overflow
+  // Barre noire dans le bas pour masquer l'overflow lors de la projection
   pushStyle();
   fill(0,0,0);
   rect(0, height - 68, width, 68);
@@ -217,31 +197,22 @@ void draw() {
 }
 
 void updateOffset(){
-  // offset = int( sin(this.video.getSpeed() * 9) * 100 );
-  // sin(1/(x^1.2))
-  // (2*sin(2*x*2*3.14159)/10/x)
   float x = this.video.getSpeed();
-  // offset = int( sin(1/(pow(x, 1.2))) * 100);
   float off = (2*sin(2*x*2*3.14159)/10/x);
   if(off > 0.5){
     off = 0.5;
   }
 
   offset = int(off * 50);
-  // println("offset: "+offset);
 }
 
 void setupVideos(){
-   videos.add("videos/Main/Main");
-   videosLengths.add(44510);
-
-  //videos.add("pngs/Intro_v2/Intro_v2_");
-  //videosLengths.add(224);
+  videos.add("videos/Main/Main");
+  videosLengths.add(44510);
 
   video = new Videos(this, videos, videosLengths);
   video.play();
   video.goToRandom();
-
 
   cadreL.add("videos/Film_strip/Film Strip 02_");
   cadreLengths.add(146);
@@ -331,7 +302,6 @@ void updatePass1Cadre() {
   pass1Cadre.clear();
 
   blackAndWhite.set("a", cadre.getOpacity());
-  // println("cadre.getOpacity(): "+cadre.getOpacity());
   pass1Cadre.shader(blackAndWhite);
 
   pass1Cadre.image(cadre.getCurrentVideo().getPImage(), 0, 0, width, height);
@@ -346,7 +316,6 @@ void updatePass2(String fx) {
    //println("handPos.z: "+handPos.z); // 20 à 70
    //println("handPos.x: "+handPos.x); // 300 à 1150
    //println("handPos.y: "+handPos.y); // 300 à 640
-
 
   pass2.beginDraw();
   
@@ -511,8 +480,6 @@ void updatePass2(String fx) {
 
 void updatePass3(String fx) {
 
-  // println("handPos.z: "+handPos.z);
-
   pass3.beginDraw();
 
   if(fx.equals("effect1")){
@@ -639,8 +606,6 @@ void updatePass3(String fx) {
   else if(fx.equals("glow")){
     pass3.clear();
     float z = map(handPos.z, 10, 70, 0.9, 0.95);
-    //println("z: "+z);
-    //println("handPos.z: "+handPos.z);
     glow.set("a", cadre.getOpacity() * norm(pass2Alpha, 0, 255));
     glow.set("intensity", 0.0);
     pass3.shader(glow);
@@ -676,19 +641,16 @@ void checkScreenSaver(){
             screensaving = false;
             bridge.send("screensaving", 0);
             this.timeoutScreenSaving.stop();
-            // println("stopping timeout");
             this.intro.goToStart();
         }
     }else{
         //Si pas d'entrée
         if (tickCount < 2 && tickCount > -2){
-            //println("pas d'entree.");
             if(!this.timeoutScreenSaving.isStarted()){
               screensaving = false;
               bridge.send("screensaving", 0);
               this.timeoutScreenSaving.reset();
               this.timeoutScreenSaving.start();
-              //println("starting timeout");
             }
             if(this.timeoutScreenSaving.isFinished()){
                 screensaving = true;
@@ -701,7 +663,6 @@ void checkScreenSaver(){
           screensaving = false;
           bridge.send("screensaving", 0);
           this.timeoutScreenSaving.reset();
-          //println("resetting timeout");
         }
     }
     tickCount = 0;
@@ -716,13 +677,11 @@ void checkEffectChange(){
     this.timeoutVideoSwitch.reset();
   }
   if(this.timeoutVideoSwitch.isFinished()){
-    //this.shadersManager.switchShader();
     this.video.goToRandom();
   }
 
   if(this.timeoutEffectSwitch.isFinished()){
     this.shadersManager.switchShader();
-    //this.video.goToRandom();
   }
 }
 
@@ -750,7 +709,6 @@ void leapOnExit(){
 
 
 void keyPressed() {
-    // println("keyCode: "+keyCode);
     //Space
     if(keyCode == 32){
         video.tick(-100);
@@ -761,10 +719,6 @@ void keyPressed() {
         shadersManager.switchShader();
     }
 }
-
-// void movieEvent(Movie m) {
-//     println("movieEvent dehors");
-// }
 
 void serialEvent(Serial p) {
 
@@ -780,9 +734,8 @@ void serialEvent(Serial p) {
     if ( elements.length == 2 ) {
         messageFirstElement = elements[0];
         messageSecondElement = int(elements[1]);
-        // On peut "router" les messages en comparant le premier Ã©lÃ©ment :
+        // On peut "router" les messages en comparant le premier élément :
         if ( messageFirstElement.equals("dir") ){
-            //manivelleValue = messageSecondElement;
             if(video != null) {
               video.tick(messageSecondElement);
             }

@@ -14,10 +14,7 @@ public class FingerMask {
   }
 
   void update(PVector fingerPos){
-    //posX = fingerPos.x;
-    //posY = fingerPos.y;
     posX = map(fingerPos.x, 300, 1150, 0, width);
-    //posY = map(fingerPos.y, 300, 640, -1.0, 1.0);
     posY = map(fingerPos.y, 300, 640, 0, height);
     size = map(fingerPos.z, 20, 70, 0, 75) * sizeFactor;
     this.show = true;
