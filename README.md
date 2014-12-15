@@ -1,20 +1,25 @@
 ![Anakronysm](images/logo.png)
 ==========
 
-## Conventions
-- Prototypes dans le dossier [tests/](test/)
-- Libraires dans le dossier [code/](code/)
-- Fichiers source dans [data/](data/)
-- Fichiers source vidéos dans [data/videos/](data/videos/)
+## Projectionisme Interactif 
 
-## Compiler et éxecuter
+[http://miuqam.github.io/anakronysm/](http://miuqam.github.io/anakronysm/)
 
-1. Placer les PNGs de vidéos dans le dossier [data/pngs/](data/pngs/)
 
-## Éxécution
+### Utilisation
 
-1. Lancer le sketch anakronysm.pde
-2. Lancer le patch max Max/udpReceiver.maxpat
+1. Copier les images du film dans le dossier Main selon la nomenclature suivante "Main####.png"
+2. Réaliser les branchements de l'Arduino et de la Leap Motion selon la seciton "Plans"
+3. Compiler et uplodader le fichier ```Arduino/manivelle/manivelle.ino``` sur l'Arduino.
+4. Compiler et exécuter le sketch ```anakronysm.pde```.
 
-## Colaborating
-Afin d'utiliser le repository, vous pouvez utiliser [Github for Windows](https://windows.github.com/) ou [Github for Mac](https://mac.github.com/)
+### Matériel
+- Arduino Leonardo
+- Leap Motion
+- Pas mal de bois.
+
+### Plans
+À venir.
+
+### License
+Ce projet est sous license MIT. Voir le fichier LICENSE pour plus de détails.
